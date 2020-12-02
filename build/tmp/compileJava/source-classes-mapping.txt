@@ -1,0 +1,66 @@
+baggageScanner/BaggageScanner.java
+ baggageScanner.BaggageScanner
+baggageScanner/Record.java
+ baggageScanner.Record
+baggageScanner/TestStripe.java
+ baggageScanner.TestStripe
+federalPolice/FederalPoliceOffice.java
+ federalPolice.FederalPoliceOffice
+baggageScanner/ManualPostControl.java
+ baggageScanner.ManualPostControl
+federalPolice/HighPressureWaterJet.java
+ federalPolice.HighPressureWaterJet
+employee/id/IDType.java
+ employee.id.IDType
+baggageScanner/operatingStation/Scanner.java
+ baggageScanner.operatingStation.Scanner
+employee/id/IDCard.java
+ employee.id.IDCard
+employee/Inspector.java
+ employee.Inspector
+employee/id/ProfileManager.java
+ employee.id.ProfileManager
+baggage/Passenger.java
+ baggage.Passenger
+employee/Employee.java
+ employee.Employee
+baggageScanner/buttons/Button.java
+ baggageScanner.buttons.Button
+federalPolice/FederalPoliceOfficer.java
+ federalPolice.FederalPoliceOfficer
+baggageScanner/ExplosiveTraceDetector.java
+ baggageScanner.ExplosiveTraceDetector
+employee/Supervisor.java
+ employee.Supervisor
+baggageScanner/conveyingComponents/Belt.java
+ baggageScanner.conveyingComponents.Belt
+Configuration.java
+ Configuration
+employee/Technician.java
+ employee.Technician
+baggage/HandBaggage.java
+ baggage.HandBaggage
+AlgorithmType.java
+ AlgorithmType
+baggageScanner/operatingStation/OperatingStation.java
+ baggageScanner.operatingStation.OperatingStation
+baggageScanner/BaggageScannerStatus.java
+ baggageScanner.BaggageScannerStatus
+baggage/Layer.java
+ baggage.Layer
+employee/id/MagnetStripe.java
+ employee.id.MagnetStripe
+baggageScanner/Supervision.java
+ baggageScanner.Supervision
+baggageScanner/conveyingComponents/Track.java
+ baggageScanner.conveyingComponents.Track
+federalPolice/Robocop.java
+ federalPolice.Robocop
+baggageScanner/conveyingComponents/RollerConveyor.java
+ baggageScanner.conveyingComponents.RollerConveyor
+employee/id/ProfileType.java
+ employee.id.ProfileType
+baggageScanner/conveyingComponents/Tray.java
+ baggageScanner.conveyingComponents.Tray
+federalPolice/ProhibitedItems.java
+ federalPolice.ProhibitedItems
