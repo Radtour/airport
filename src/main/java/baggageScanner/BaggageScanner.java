@@ -1,5 +1,8 @@
 package baggageScanner;
 
+import baggageScanner.conveyingComponents.Belt;
+import baggageScanner.conveyingComponents.RollerConveyor;
+import baggageScanner.conveyingComponents.Track;
 import federalPolice.FederalPoliceOfficer;
 
 public class BaggageScanner {

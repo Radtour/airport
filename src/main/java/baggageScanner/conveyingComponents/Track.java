@@ -1,4 +1,4 @@
-package baggageScanner;
+package baggageScanner.conveyingComponents;
 
 public class Track {
     int id;

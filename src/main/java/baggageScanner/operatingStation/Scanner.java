@@ -1,6 +1,6 @@
 package baggageScanner.operatingStation;
 
-public class Scanner {
+public abstract class Scanner {
     public Scanner(){
 
     }

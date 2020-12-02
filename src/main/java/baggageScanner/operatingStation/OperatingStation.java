@@ -1,5 +1,6 @@
 package baggageScanner.operatingStation;
 
+import baggageScanner.buttons.Button;
 import employee.Inspector;
 
 public class OperatingStation {

@@ -1,3 +1,5 @@
+package baggageScanner;
+
 import java.util.Date;
 
 public class Record {

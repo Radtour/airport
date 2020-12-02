@@ -2,9 +2,9 @@ package federalPolice;
 
 import baggage.HandBaggage;
 
-public class Robot {
+public class Robocop {
     private HighPressureWaterJet highPressureWaterJet;
-    public Robot() {
+    public Robocop() {
         highPressureWaterJet = new HighPressureWaterJet();
     }
 
