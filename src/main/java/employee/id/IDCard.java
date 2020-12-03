@@ -12,9 +12,9 @@ public class IDCard {
     private final Boolean isLocked;
     private final IDType type;
     private final MagnetStripe magnetStripe;
-    private final Employee employee;
+    private Employee employee;
 
-    public IDCard(String id, IDType type, Employee employee) {
+    public IDCard(String id, IDType type) {
         this.id = id;
         this.type = type;
         Calendar c = Calendar.getInstance();
@@ -22,7 +22,6 @@ public class IDCard {
         c.add(Calendar.YEAR, 1);
         this.validUntil = c.getTime();
         this.isLocked = false;
-        this.employee = employee;
         this.magnetStripe = new MagnetStripe(employee);
     }
 
@@ -48,5 +47,9 @@ public class IDCard {
 
     public String getId() {
         return id;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

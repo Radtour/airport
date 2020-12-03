@@ -17,5 +17,6 @@ public enum Configuration {
 
     public final algorithms.AES aes = new AES();
     public final String secretKey = "dhbw$20^20_";
-    public final SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+    public final SimpleDateFormat dateFormatFull= new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+    public final SimpleDateFormat dateFormatShort= new SimpleDateFormat("dd.MM.yyyy");
 }
