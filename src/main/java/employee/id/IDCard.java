@@ -17,6 +17,8 @@ public class IDCard {
         this.validUntil = validUntil;
         this.isLocked = isLocked;
         this.type = type;
+
+        this.magnetStripe = new MagnetStripe(employee);
     }
 
 }

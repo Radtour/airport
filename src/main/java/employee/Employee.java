@@ -11,7 +11,7 @@ public abstract class Employee {
     private Date birthDate;
     private IDCard idCard;
     private ProfileType profileType;
-    public Employee(){
+    public Employee(ProfileType profileType){
 
     }
 

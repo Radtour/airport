@@ -8,6 +8,7 @@ public class Passenger {
 
     private final String name;
     private HandBaggage[] handBaggages;
+    private boolean isArrested;
 
     public Passenger(String name,int handBaggageAmount, String baggageInfoString){
 
@@ -64,5 +65,13 @@ public class Passenger {
 
     public String getName() {
         return name;
+    }
+
+    public void setArrested(boolean arrested) {
+        isArrested = arrested;
+    }
+
+    public boolean isArrested() {
+        return isArrested;
     }
 }
