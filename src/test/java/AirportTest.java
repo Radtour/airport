@@ -12,7 +12,7 @@ public class AirportTest {
     @Test
     @Order(1)
     public void init(){
-        List<Passenger> passengers = new ArrayList<Passenger>();
+        List<Passenger> passengers = new ArrayList<>();
         try {
             FileReader fileReader = new FileReader("data/passenger_baggage.txt");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -37,7 +37,6 @@ public class AirportTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         Assertions.assertEquals(568, passengers.size());
         Assertions.assertEquals(609, HandBaggage.getHandBaggageHashSet().size());
     }

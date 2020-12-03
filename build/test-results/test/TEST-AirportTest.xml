@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="AirportTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-12-03T19:12:38" hostname="DESKTOP-ARTHUR" time="0.142">
+<testsuite name="AirportTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2020-12-03T19:30:07" hostname="DESKTOP-HERRMAN" time="0.384">
   <properties/>
-  <testcase name="init()" classname="AirportTest" time="0.142"/>
+  <testcase name="onlyFans()" classname="AirportTest" time="0.017"/>
+  <testcase name="unlockBaggageScanner()" classname="AirportTest" time="0.001"/>
+  <testcase name="noIllegalItems()" classname="AirportTest" time="0.001"/>
+  <testcase name="gunFound()" classname="AirportTest" time="0.001"/>
+  <testcase name="profileKO()" classname="AirportTest" time="0.001"/>
+  <testcase name="findGun()" classname="AirportTest" time="0.001"/>
+  <testcase name="detectKnife()" classname="AirportTest" time="0.0"/>
+  <testcase name="init()" classname="AirportTest" time="0.351"/>
+  <testcase name="findKnife()" classname="AirportTest" time="0.001"/>
+  <testcase name="threeTimeWrongPin()" classname="AirportTest" time="0.0"/>
+  <testcase name="knifeFound()" classname="AirportTest" time="0.001"/>
+  <testcase name="explosiveFound()" classname="AirportTest" time="0.001"/>
+  <testcase name="setBaggageScannerAndEmployees()" classname="AirportTest" time="0.001"/>
+  <testcase name="logScans()" classname="AirportTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
