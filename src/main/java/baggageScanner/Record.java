@@ -1,14 +1,15 @@
 package baggageScanner;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Record {
     private String id;
     private Date timeStamp;
     private String result;
 
-    public Record(String id, Date timeStamp, String result) {
-        this.id = id;
+    public Record(Date timeStamp, String result) {
+        this.id = UUID.randomUUID().toString();
         this.timeStamp = timeStamp;
         this.result = result;
     }
