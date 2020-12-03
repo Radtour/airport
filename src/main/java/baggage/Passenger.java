@@ -8,7 +8,9 @@ public class Passenger {
 
     private String[][] baggageInfoMap;
 
-    public Passenger(int handBaggageAmount, String baggageInfoString){
+    private String name;
+
+    public Passenger(String name,int handBaggageAmount, String baggageInfoString){
 
         this.handBaggages = new HandBaggage[handBaggageAmount];
 

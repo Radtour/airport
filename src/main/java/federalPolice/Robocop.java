@@ -20,7 +20,7 @@ public class Robocop {
             z = 0;
             for(int j=0;j<10;j++){
                 for(int k=0;k<1000;k++){
-                    destroyedHandbaggage[k][y] = handbaggage.layer[i].content[z];
+                    destroyedHandbaggage[k][y] = handbaggage.getLayers()[i].getContent()[z];
                     z++;
                 }
                 y++;
