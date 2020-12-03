@@ -11,7 +11,7 @@ public class IDCard {
     private final Date validUntil;
     private final Boolean isLocked;
     private final IDType type;
-    private final MagnetStripe magnetStripe;
+    private MagnetStripe magnetStripe;
     private Employee employee;
 
     public IDCard(String id, IDType type) {
@@ -22,7 +22,6 @@ public class IDCard {
         c.add(Calendar.YEAR, 1);
         this.validUntil = c.getTime();
         this.isLocked = false;
-        this.magnetStripe = new MagnetStripe(employee);
     }
 
     public Boolean getLocked() {
@@ -51,5 +50,9 @@ public class IDCard {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public void writeMagnetStripe(Employee employee){
+        this.magnetStripe = new MagnetStripe(employee);
     }
 }

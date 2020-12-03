@@ -11,6 +11,7 @@ public class MagnetStripe {
     public MagnetStripe(Employee employee) {
         encrypt(employee);
     }
+
     private void encrypt(Employee employee){
         Random random = new Random();
         int pin = random.nextInt(9999 - 1000) + 1000;

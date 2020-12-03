@@ -1,5 +1,6 @@
 import baggage.HandBaggage;
 import baggage.Passenger;
+import baggageScanner.BaggageScanner;
 import configuration.Configuration;
 import employee.HouseKeeper;
 import employee.Inspector;
@@ -76,8 +77,28 @@ public class AirportTest {
             FederalPoliceOfficer officerO3 = new FederalPoliceOfficer("Officer", ProfileType.O, "Harry", Configuration.instance.dateFormatShort.parse("01.01.1969"),  idCardO3);
             Technician technician = new Technician(ProfileType.T, "Jason Statham", Configuration.instance.dateFormatShort.parse("26.07.1967"), idCardT);
             HouseKeeper houseKeeper = new HouseKeeper(ProfileType.K, "Jason Clarke", Configuration.instance.dateFormatShort.parse("17.07.1969"), idCardK);
+            idCardI1.writeMagnetStripe(inspectorI1);
+            idCardI2.writeMagnetStripe(inspectorI2);
+            idCardI3.writeMagnetStripe(inspectorI3);
+            idCardK.writeMagnetStripe(houseKeeper);
+            idCardO1.writeMagnetStripe(officerO1);
+            idCardO2.writeMagnetStripe(officerO2);
+            idCardO3.writeMagnetStripe(officerO3);
+            idCardS.writeMagnetStripe(supervisorS);
+            idCardT.writeMagnetStripe(technician);
 
+            BaggageScanner baggageScanner = new BaggageScanner(supervisorS,inspectorI1,inspectorI2,inspectorI3,technician,officerO1,houseKeeper);
+            FederalPoliceOffice federalPoliceOffice = new FederalPoliceOffice(officerO2, officerO3);
 
+            assertEquals(technician, baggageScanner.getTechnician());
+            assertEquals(inspectorI1, baggageScanner.getRollerConveyor().getInspector());
+            assertEquals(inspectorI2, baggageScanner.getOperatingStation().getInspector());
+            assertEquals(inspectorI3, baggageScanner.getManualPostControl().getInspector());
+            assertEquals(officerO1, baggageScanner.getOfficer());
+            assertEquals(supervisorS, baggageScanner.getSupervision().getSupervisor());
+            assertEquals(houseKeeper, baggageScanner.getHouseKeeper());
+            assertEquals(officerO2, federalPoliceOffice.getOfficers()[0]);
+            assertEquals(officerO3, federalPoliceOffice.getOfficers()[1]);
         }
         catch (ParseException e) {
             e.printStackTrace();
