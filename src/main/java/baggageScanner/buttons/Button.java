@@ -1,8 +1,10 @@
 package baggageScanner.buttons;
 
-public class Button {
+public abstract class Button {
 
     public Button(){
 
     }
+
+    public abstract void push();
 }
