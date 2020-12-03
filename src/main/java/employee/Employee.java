@@ -4,18 +4,40 @@ import employee.id.IDCard;
 import employee.id.ProfileType;
 
 import java.util.Date;
+import java.util.Random;
+import java.util.UUID;
 
 public abstract class Employee {
-    private String id;
-    private String name;
-    private Date birthDate;
-    private IDCard idCard;
-    private ProfileType profileType;
-    public Employee(ProfileType profileType){
-
+    private final String name;
+    private final Date birthDate;
+    private final ProfileType profileType;
+    private final String id;
+    private final IDCard idCard;
+    public Employee(ProfileType profileType, String name, Date birthDate, IDCard idCard){
+        this.profileType = profileType;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.id = UUID.randomUUID().toString();
+        this.idCard = idCard;
     }
 
     public ProfileType getProfileType() {
         return profileType;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public IDCard getIdCard() {
+        return idCard;
     }
 }

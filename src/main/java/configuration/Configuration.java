@@ -2,6 +2,8 @@ package configuration;
 
 import algorithms.AES;
 
+import java.text.SimpleDateFormat;
+
 public enum Configuration {
     instance;
 
@@ -15,4 +17,5 @@ public enum Configuration {
 
     public final algorithms.AES aes = new AES();
     public final String secretKey = "dhbw$20^20_";
+    public final SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
 }

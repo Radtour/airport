@@ -1,5 +1,7 @@
 import baggage.HandBaggage;
 import baggage.Passenger;
+import employee.Inspector;
+import employee.id.ProfileType;
 import org.junit.jupiter.api.*;
 
 import java.io.*;
