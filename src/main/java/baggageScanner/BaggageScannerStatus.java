@@ -3,5 +3,7 @@ package baggageScanner;
 public enum BaggageScannerStatus {
     activated,
     locked,
-    inUse
+    inUse,
+    deactivated,
+    offline
 }

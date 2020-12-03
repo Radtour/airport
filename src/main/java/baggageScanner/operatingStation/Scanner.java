@@ -1,5 +1,7 @@
 package baggageScanner.operatingStation;
 
+import employee.id.IDCard;
+
 public class Scanner {
     private OperatingStation operatingStation;
 
@@ -13,5 +15,11 @@ public class Scanner {
 
     public void setOperatingStation(OperatingStation operatingStation) {
         this.operatingStation = operatingStation;
+    }
+
+    private Boolean swipeCard(IDCard idCard,int pin){
+        boolean valid = false;
+
+        return valid;
     }
 }

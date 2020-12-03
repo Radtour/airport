@@ -16,7 +16,7 @@ public class BaggageScanner {
     private Supervision supervision;
     private Belt belt;
     private RollerConveyor rollerConveyor;
-    private OperatingStation[] operatingStations;
+    private OperatingStation operatingStation;
     private Track[] tracks;
     private Technician technician;
 
@@ -24,14 +24,19 @@ public class BaggageScanner {
         this.technician = technician;
 
         supervision = new Supervision(supervisorS0,this);
-        operatingStations[0] = new OperatingStation(inspectorI1,this);
-        operatingStations[1] = new OperatingStation(inspectorI2,this);
-        operatingStations[2] = new OperatingStation(inspectorI3,this);
+        operatingStation = new OperatingStation(inspectorI2,this);
+
+
+        rollerConveyor = new RollerConveyor(inspectorI1,this);
 
         belt = new Belt(this);
 
         tracks[0] = new Track(1);
         tracks[1] = new Track(2);
 
+    }
+
+    public void setStatus(BaggageScannerStatus status) {
+        this.status = status;
     }
 }
