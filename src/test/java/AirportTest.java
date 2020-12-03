@@ -1,3 +1,4 @@
+import baggage.HandBaggage;
 import baggage.Passenger;
 import org.junit.jupiter.api.*;
 
@@ -36,6 +37,9 @@ public class AirportTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Assertions.assertEquals(568, passengers.size());
+        Assertions.assertEquals(609, HandBaggage.getHandBaggageHashSet().size());
     }
 
     @Test

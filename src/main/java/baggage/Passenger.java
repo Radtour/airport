@@ -41,10 +41,16 @@ public class Passenger {
                 }
             }
 
-            if(hasIllegalItem)
-                this.handBaggages[i] = new HandBaggage(information);
-            else
-                this.handBaggages[i] = new HandBaggage();
+            if(hasIllegalItem){
+                HandBaggage handBaggageTemp = new HandBaggage(information);
+                this.handBaggages[i] = handBaggageTemp;
+                HandBaggage.addHandBaggageToHashSet(handBaggageTemp);
+            }
+            else {
+                HandBaggage handBaggageTemp = new HandBaggage();
+                this.handBaggages[i] = handBaggageTemp;
+                HandBaggage.addHandBaggageToHashSet(handBaggageTemp);
+            }
         }
     }
 

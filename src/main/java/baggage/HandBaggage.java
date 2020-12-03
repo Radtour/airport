@@ -2,9 +2,13 @@ package baggage;
 
 import configuration.Configuration;
 
+import java.util.HashSet;
 import java.util.Random;
 
 public class HandBaggage {
+
+    private static HashSet<HandBaggage> handBaggageHashSet = new HashSet<>();
+
     private Layer[] layers;
 
     public HandBaggage(String[] baggageInfo){
@@ -88,5 +92,13 @@ public class HandBaggage {
 
     public void setLayers(Layer[] layers) {
         this.layers = layers;
+    }
+
+    public static HashSet<HandBaggage> getHandBaggageHashSet() {
+        return handBaggageHashSet;
+    }
+
+    public static void addHandBaggageToHashSet(HandBaggage handBaggage){
+        handBaggageHashSet.add(handBaggage);
     }
 }
