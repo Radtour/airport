@@ -3,13 +3,17 @@ package employee;
 import baggage.HandBaggage;
 import baggageScanner.TestStripe;
 import baggageScanner.conveyingComponents.Tray;
+import employee.id.IDCard;
 import employee.id.ProfileType;
 
-public class Inspector extends Employee {
-    private Boolean isSenior;
+import java.util.Date;
 
-    public Inspector(ProfileType profileType){
-        super(profileType);
+public class Inspector extends Employee {
+    private final Boolean isSenior;
+
+    public Inspector(ProfileType profileType, String name, Date birthDate, IDCard idCard, boolean isSenior){
+        super(profileType, name, birthDate, idCard);
+        this.isSenior = isSenior;
 
     }
 
@@ -29,5 +33,9 @@ public class Inspector extends Employee {
         TestStripe testStripe = new TestStripe();
 
         testStripe.setEXP();
+    }
+
+    public Boolean getSenior() {
+        return isSenior;
     }
 }
