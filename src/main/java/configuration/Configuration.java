@@ -19,4 +19,5 @@ public enum Configuration {
     public final String secretKey = "dhbw$20^20_";
     public final SimpleDateFormat dateFormatFull= new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
     public final SimpleDateFormat dateFormatShort= new SimpleDateFormat("dd.MM.yyyy");
+    public final SimpleDateFormat dateFormatMegaFull = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss,SSS");
 }

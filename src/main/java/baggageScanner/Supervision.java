@@ -12,6 +12,7 @@ public class Supervision {
 
     public Supervision(Supervisor supervisor,BaggageScanner baggageScanner) {
         this.supervisor = supervisor;
+        supervisor.setSupervision(this);
         startButton = new StartButton();
         shutdownButton = new ShutdownButton();
     }
@@ -34,5 +35,9 @@ public class Supervision {
 
     public ShutdownButton getShutdownButton() {
         return shutdownButton;
+    }
+
+    public BaggageScanner getBaggageScanner() {
+        return baggageScanner;
     }
 }

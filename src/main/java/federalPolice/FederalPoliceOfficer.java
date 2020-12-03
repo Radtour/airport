@@ -20,10 +20,14 @@ public class FederalPoliceOfficer extends Employee {
     }
 
     public void requestBackup(){
-        //TODO: wie gehts weiter?
+        office.
     }
 
     public char[][] operationDefuse(HandBaggage handBaggage){
         return office.randomRobocopDestroyHandBaggage(handBaggage);
+    }
+
+    public void setOffice(FederalPoliceOffice office){
+        this.office = office;
     }
 }

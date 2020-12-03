@@ -16,6 +16,10 @@ public class Tray {
         this.handBaggage = handBaggage;
     }
 
+    public void removeHandBaggage(){
+        this.handBaggage = null;
+    }
+
     public HandBaggage getHandBaggage() {
         return handBaggage;
     }

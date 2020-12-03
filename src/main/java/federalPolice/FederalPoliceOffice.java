@@ -3,6 +3,7 @@ package federalPolice;
 
 import baggage.HandBaggage;
 import java.util.Random;
+import java.util.SimpleTimeZone;
 
 public class FederalPoliceOffice {
     private Robocop[] robocop;
@@ -30,5 +31,9 @@ public class FederalPoliceOffice {
 
     public Robocop[] getRobocop() {
         return robocop;
+    }
+
+    public void sendBackUp(){
+        System.out.println("sending backup");
     }
 }

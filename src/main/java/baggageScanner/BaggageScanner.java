@@ -1,15 +1,21 @@
 package baggageScanner;
 
+import baggage.HandBaggage;
 import baggageScanner.conveyingComponents.Belt;
 import baggageScanner.conveyingComponents.RollerConveyor;
 import baggageScanner.conveyingComponents.Track;
 import baggageScanner.operatingStation.OperatingStation;
+import configuration.Configuration;
 import employee.HouseKeeper;
 import employee.Inspector;
 import employee.Supervisor;
 import employee.Technician;
 import federalPolice.FederalPoliceOffice;
 import federalPolice.FederalPoliceOfficer;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class BaggageScanner {
     private BaggageScannerStatus status;
@@ -20,6 +26,7 @@ public class BaggageScanner {
     private OperatingStation operatingStation;
     private ManualPostControl manualPostControl;
     private Track[] tracks;
+    private List<Record> record;
     private Technician technician;
     private HouseKeeper houseKeeper;
 
@@ -27,6 +34,8 @@ public class BaggageScanner {
         this.technician = technician;
         this.houseKeeper = houseKeeper;
         this.officer = federalPoliceOfficer;
+
+        record = new ArrayList<Record>();
 
         supervision = new Supervision(supervisorS0,this);
         operatingStation = new OperatingStation(inspectorI2,this);
@@ -85,5 +94,45 @@ public class BaggageScanner {
 
     public ManualPostControl getManualPostControl() {
         return manualPostControl;
+    }
+
+    public void scan(HandBaggage handBaggage){
+        for(int i = 0; i < 5; i++){
+            for (int j = 0; j < 9996; j++){
+                if(handBaggage.getLayers()[i].getContent()[j] == 'k'
+                        && handBaggage.getLayers()[i].getContent()[j+1] == 'n'
+                        && handBaggage.getLayers()[i].getContent()[j+2] == '!'
+                        && handBaggage.getLayers()[i].getContent()[j+3] == 'f'
+                        && handBaggage.getLayers()[i].getContent()[j+4] == 'e'){
+                    record.add(new Record(,"");
+                }
+            }
+            for (int j = 0; j < 9994; j++){
+                if(handBaggage.getLayers()[i].getContent()[j] == 'g'
+                        && handBaggage.getLayers()[i].getContent()[j+1] == 'l'
+                        && handBaggage.getLayers()[i].getContent()[j+2] == 'o'
+                        && handBaggage.getLayers()[i].getContent()[j+3] == 'c'
+                        && handBaggage.getLayers()[i].getContent()[j+4] == 'k'
+                        && handBaggage.getLayers()[i].getContent()[j+5] == '|'
+                        && handBaggage.getLayers()[i].getContent()[j+6] == '7'){
+
+                }
+            }
+            for (int j = 0; j < 9992; j++){
+                if(handBaggage.getLayers()[i].getContent()[j] == 'e'
+                        && handBaggage.getLayers()[i].getContent()[j+1] == 'x'
+                        && handBaggage.getLayers()[i].getContent()[j+2] == 'p'
+                        && handBaggage.getLayers()[i].getContent()[j+3] == '|'
+                        && handBaggage.getLayers()[i].getContent()[j+4] == 'o'
+                        && handBaggage.getLayers()[i].getContent()[j+5] == 's'
+                        && handBaggage.getLayers()[i].getContent()[j+6] == '!'
+                        && handBaggage.getLayers()[i].getContent()[j+7] == 'v'
+                        && handBaggage.getLayers()[i].getContent()[j+8] == 'e'){
+
+
+                }
+            }
+        }
+
     }
 }
