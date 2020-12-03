@@ -1,9 +1,13 @@
 package baggageScanner.conveyingComponents;
 
+import baggageScanner.BaggageScanner;
+
 public class Belt {
 
-    public Belt(){
+    private final BaggageScanner baggageScanner;
 
+    public Belt(BaggageScanner baggageScanner){
+        this.baggageScanner = baggageScanner;
     }
     public void moveBeltForward() {
         //TODO: do something

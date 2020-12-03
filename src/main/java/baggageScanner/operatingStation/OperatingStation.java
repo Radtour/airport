@@ -1,5 +1,6 @@
 package baggageScanner.operatingStation;
 
+import baggageScanner.BaggageScanner;
 import baggageScanner.buttons.Button;
 import baggageScanner.buttons.LeftButton;
 import baggageScanner.buttons.RectangleButton;
@@ -7,21 +8,45 @@ import baggageScanner.buttons.RightButton;
 import employee.Inspector;
 
 public class OperatingStation {
-    private final Button[] buttons;
-    private Inspector inspector;
+    private final LeftButton leftButton;
+    private final RightButton rightButton;
+    private final RectangleButton rectangleButton;
+    private final Inspector inspector;
     private Scanner scanner;
+    private final BaggageScanner baggageScanner;
 
-    public OperatingStation(){
-        this.buttons = new Button[3];
-        this.buttons[0] = new LeftButton();
-        this.buttons[1] = new RightButton();
-        this.buttons[2] = new RectangleButton();
+    public OperatingStation(Inspector inspector, BaggageScanner baggageScanner){
+        scanner = new Scanner(this);
+        this.inspector = inspector;
+        this.baggageScanner = baggageScanner;
 
-        this.scanner = new Scanner(this);
+        leftButton = new LeftButton();
+        rightButton = new RightButton();
+        rectangleButton = new RectangleButton();
     }
 
-    public Button[] getButtons() {
-        return buttons;
+    public void pushRectagleButton(){
+        rectangleButton.push(baggageScanner);
+    }
+
+    public void pushLeftButton(){
+        leftButton.push(baggageScanner);
+    }
+
+    public void pushRightButton(){
+        rightButton.push(baggageScanner);
+    }
+
+    public LeftButton getLeftButton() {
+        return leftButton;
+    }
+
+    public RightButton getRightButton() {
+        return rightButton;
+    }
+
+    public RectangleButton getRectangleButton() {
+        return rectangleButton;
     }
 
     public Inspector getInspector() {
@@ -32,11 +57,7 @@ public class OperatingStation {
         return scanner;
     }
 
-    public void setInspector(Inspector inspector) {
-        this.inspector = inspector;
-    }
-
-    public void setScanner(Scanner scanner) {
-        this.scanner = scanner;
+    public BaggageScanner getBaggageScanner() {
+        return baggageScanner;
     }
 }
