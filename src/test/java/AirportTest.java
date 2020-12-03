@@ -2,6 +2,8 @@ import baggage.Passenger;
 import org.junit.jupiter.api.*;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,13 +11,14 @@ public class AirportTest {
     @Test
     @Order(1)
     public void init(){
-        Passenger passenger;
+        List<Passenger> passengers = new ArrayList<Passenger>();
         try {
             FileReader fileReader = new FileReader("data/passenger_baggage.txt");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             String give;
 
+            //TODO zeile für zeile einlesen bis datei leer ist
             for(int i=0; i<568; i++){
                 String line = bufferedReader.readLine();
                 String[] split = line.split(";");
@@ -28,7 +31,7 @@ public class AirportTest {
                 else {
                     give = split[2].substring(1,split[2].length()-1);
                 }
-                passenger = new Passenger(split[0],Integer.parseInt(split[1]),give);
+                passengers.add(new Passenger(split[0],Integer.parseInt(split[1]),give));
             }
         } catch (IOException e) {
             e.printStackTrace();

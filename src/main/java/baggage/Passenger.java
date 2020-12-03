@@ -1,26 +1,28 @@
 package baggage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Passenger {
 
+    private final String name;
     private HandBaggage[] handBaggages;
 
-    private String[][] baggageInfoMap;
-
-    private String name;
-
     public Passenger(String name,int handBaggageAmount, String baggageInfoString){
+
+        List<String[]> baggageInfoList = new ArrayList<>();
+
+        this.name = name;
 
         this.handBaggages = new HandBaggage[handBaggageAmount];
 
         if(!baggageInfoString.isEmpty()){
-            this.baggageInfoMap = new String[handBaggageAmount][3];
 
             var baggageInfo = baggageInfoString.split(";");
 
             for (int i = 0; i < baggageInfo.length; i++){
-                baggageInfoMap[i] = baggageInfo[i].split(",");
+                baggageInfoList.add(baggageInfo[i].split(","));
             }
         }
 
@@ -29,8 +31,8 @@ public class Passenger {
             boolean hasIllegalItem = false;
             String[] information = new String[2];
 
-            if(baggageInfoMap != null) {
-                for (String[] info : baggageInfoMap) {
+            if(baggageInfoList.size() > 0) {
+                for (String[] info : baggageInfoList) {
                     if (Integer.parseInt(info[1]) == i) {
                         hasIllegalItem = true;
                         information[0] = info[0];
@@ -52,5 +54,9 @@ public class Passenger {
 
     public void setHandBaggages(HandBaggage[] handBaggages) {
         this.handBaggages = handBaggages;
+    }
+
+    public String getName() {
+        return name;
     }
 }

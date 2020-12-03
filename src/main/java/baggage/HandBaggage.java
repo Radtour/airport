@@ -10,36 +10,65 @@ public class HandBaggage {
     public HandBaggage(String[] baggageInfo){
         this.layers = new Layer[Configuration.instance.layerAmount];
 
-        Random random = new Random();
-
-        int r = random.nextInt((layers[Integer.parseInt(baggageInfo[1])].getContent().length - Configuration.instance.knife.length()));
-        if(r < 0){
-            r = 0;
+        for(int i = 0; i < Configuration.instance.layerAmount; i++){
+            this.layers[i] = new Layer();
         }
+
+        Random random = new Random();
 
         switch (baggageInfo[0]) {
             case "K" -> {
-                var content = layers[Integer.parseInt(baggageInfo[1])].getContent();
+                int layerLength = layers[Integer.parseInt(baggageInfo[1]) - 1].getContent().length;
+                int illegalItemLength = Configuration.instance.knife.length();
+                int r = random.nextInt((layerLength - illegalItemLength));
+                if(r < 0){
+                    r = 0;
+                }
+
+                var content = layers[Integer.parseInt(baggageInfo[1]) - 1].getContent();
 
                 for (int i = 0; i < Configuration.instance.knife.length(); i++) {
                     content[r + i] = Configuration.instance.knife.charAt(i);
                 }
+
+                layers[Integer.parseInt(baggageInfo[1]) - 1].setContent(content);
+
                 break;
             }
             case "W" -> {
-                var content = layers[Integer.parseInt(baggageInfo[1])].getContent();
+                int layerLength = layers[Integer.parseInt(baggageInfo[1]) - 1].getContent().length;
+                int illegalItemLength = Configuration.instance.weapon.length();
+                int r = random.nextInt((layerLength - illegalItemLength));
+                if(r < 0){
+                    r = 0;
+                }
+
+                var content = layers[Integer.parseInt(baggageInfo[1]) - 1].getContent();
 
                 for (int i = 0; i < Configuration.instance.weapon.length(); i++) {
                     content[r + i] = Configuration.instance.weapon.charAt(i);
                 }
+
+                layers[Integer.parseInt(baggageInfo[1]) - 1].setContent(content);
+
                 break;
             }
             case "E" -> {
-                var content = layers[Integer.parseInt(baggageInfo[1])].getContent();
+                int layerLength = layers[Integer.parseInt(baggageInfo[1]) - 1].getContent().length;
+                int illegalItemLength = Configuration.instance.explosive.length();
+                int r = random.nextInt((layerLength - illegalItemLength));
+                if(r < 0){
+                    r = 0;
+                }
+
+                var content = layers[Integer.parseInt(baggageInfo[1]) - 1].getContent();
 
                 for (int i = 0; i < Configuration.instance.explosive.length(); i++) {
                     content[r + i] = Configuration.instance.explosive.charAt(i);
                 }
+
+                layers[Integer.parseInt(baggageInfo[1]) - 1].setContent(content);
+
                 break;
             }
         }
@@ -47,6 +76,10 @@ public class HandBaggage {
 
     public HandBaggage() {
         this.layers = new Layer[Configuration.instance.layerAmount];
+
+        for(int i = 0; i < Configuration.instance.layerAmount; i++){
+            this.layers[i] = new Layer();
+        }
     }
 
     public Layer[] getLayers() {
