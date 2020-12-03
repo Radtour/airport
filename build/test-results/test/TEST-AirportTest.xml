@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="AirportTest" tests="12" skipped="4" failures="1" errors="0" timestamp="2020-12-03T18:35:49" hostname="DESKTOP-HERRMAN" time="35.734">
+<testsuite name="AirportTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2020-12-03T18:32:42" hostname="DESKTOP-ARTHUR" time="0.015">
   <properties/>
-  <testcase name="onlyFans()" classname="AirportTest" time="0.02"/>
-  <testcase name="unlockBaggageScanner()" classname="AirportTest" time="0.001"/>
-  <testcase name="noIllegalItems()" classname="AirportTest" time="0.001"/>
-  <testcase name="gunFound()" classname="AirportTest" time="0.0"/>
-  <testcase name="profileKO()" classname="AirportTest" time="0.001"/>
-  <testcase name="findGun()" classname="AirportTest" time="0.001"/>
-  <testcase name="detectKnife()" classname="AirportTest" time="0.0"/>
-  <testcase name="init()" classname="AirportTest" time="35.637">
+  <testcase name="init()" classname="AirportTest" time="0.015">
     <failure message="java.lang.NumberFormatException: null" type="java.lang.NumberFormatException">java.lang.NumberFormatException: null
 	at java.base/java.lang.Integer.parseInt(Integer.java:614)
 	at java.base/java.lang.Integer.parseInt(Integer.java:770)
@@ -103,18 +96,6 @@
 	at org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:56)
 	at java.base/java.lang.Thread.run(Thread.java:832)
 </failure>
-  </testcase>
-  <testcase name="findKnife()" classname="AirportTest" time="0.004">
-    <skipped/>
-  </testcase>
-  <testcase name="threeTimeWrongPin()" classname="AirportTest" time="0.003">
-    <skipped/>
-  </testcase>
-  <testcase name="knifeFound()" classname="AirportTest" time="0.005">
-    <skipped/>
-  </testcase>
-  <testcase name="explosiveFound()" classname="AirportTest" time="0.032">
-    <skipped/>
   </testcase>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
