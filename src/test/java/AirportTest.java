@@ -11,28 +11,28 @@ public class AirportTest {
     public void init(){
         Passenger passenger;
         try {
-            FileReader fileReader = new FileReader("passenger_baggage.txt");
+            FileReader fileReader = new FileReader("data/passenger_baggage.txt");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             String give;
-            String giveTmp;
 
-            for(int i=0; i<596; i++){
+            for(int i=0; i<568; i++){
                 String line = bufferedReader.readLine();
                 String[] split = line.split(";");
+                if(split.length>3){
+                    split[2]= split[2] + ";" + split[3];
+                }
                 if(split[2].equals("-")){
                     give = "";
                 }
                 else {
-                    giveTmp = split[2].substring(1);
-                    give = giveTmp.substring(0,giveTmp.length()-1);
+                    give = split[2].substring(1,split[2].length()-1);
                 }
                 passenger = new Passenger(split[0],Integer.parseInt(split[1]),give);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @Test

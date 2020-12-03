@@ -42,7 +42,7 @@ public class Passenger {
             if(hasIllegalItem)
                 this.handBaggages[i] = new HandBaggage(information);
             else
-                this.handBaggages[0] = new HandBaggage();
+                this.handBaggages[i] = new HandBaggage();
         }
     }
 
