@@ -1,5 +1,6 @@
 package employee;
 
+import baggageScanner.BaggageScanner;
 import employee.id.IDCard;
 import employee.id.ProfileType;
 
@@ -13,6 +14,7 @@ public abstract class Employee {
     private final ProfileType profileType;
     private final String id;
     private final IDCard idCard;
+    private BaggageScanner baggageScanner;
     public Employee(ProfileType profileType, String name, Date birthDate, IDCard idCard){
         this.profileType = profileType;
         this.name = name;
@@ -39,5 +41,13 @@ public abstract class Employee {
 
     public IDCard getIdCard() {
         return idCard;
+    }
+
+    public BaggageScanner getBaggageScanner() {
+        return baggageScanner;
+    }
+
+    public void setBaggageScanner(BaggageScanner baggageScanner) {
+        this.baggageScanner = baggageScanner;
     }
 }

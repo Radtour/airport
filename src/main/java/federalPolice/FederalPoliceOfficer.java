@@ -20,7 +20,6 @@ public class FederalPoliceOfficer extends Employee {
     }
 
     public void requestBackup(){
-        office.
     }
 
     public char[][] operationDefuse(HandBaggage handBaggage){

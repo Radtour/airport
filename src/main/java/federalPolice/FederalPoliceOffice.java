@@ -15,7 +15,9 @@ public class FederalPoliceOffice {
         }
         officers = new FederalPoliceOfficer[2];
         officers[0] = officer02;
+        officer02.setOffice(this);
         officers[1] = officer03;
+        officer03.setOffice(this);
     }
 
     public char[][] randomRobocopDestroyHandBaggage(HandBaggage handBaggage){

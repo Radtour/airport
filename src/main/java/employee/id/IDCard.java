@@ -13,6 +13,7 @@ public class IDCard {
     private final IDType type;
     private MagnetStripe magnetStripe;
     private Employee employee;
+    private int failedAttempts;
 
     public IDCard(String id, IDType type) {
         this.id = id;
@@ -54,5 +55,13 @@ public class IDCard {
 
     public void writeMagnetStripe(Employee employee){
         this.magnetStripe = new MagnetStripe(employee);
+    }
+
+    public void addFailedAttempts() {
+        this.failedAttempts++;
+    }
+
+    public int getFailedAttempts() {
+        return failedAttempts;
     }
 }

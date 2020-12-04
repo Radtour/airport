@@ -34,6 +34,14 @@ public class BaggageScanner {
         this.technician = technician;
         this.houseKeeper = houseKeeper;
         this.officer = federalPoliceOfficer;
+        inspectorI1.setBaggageScanner(this);
+        inspectorI2.setBaggageScanner(this);
+        inspectorI3.setBaggageScanner(this);
+        technician.setBaggageScanner(this);
+        federalPoliceOfficer.setBaggageScanner(this);
+        supervisorS0.setBaggageScanner(this);
+        houseKeeper.setBaggageScanner(this);
+
 
         record = new ArrayList<Record>();
 
@@ -104,7 +112,6 @@ public class BaggageScanner {
                         && handBaggage.getLayers()[i].getContent()[j+2] == '!'
                         && handBaggage.getLayers()[i].getContent()[j+3] == 'f'
                         && handBaggage.getLayers()[i].getContent()[j+4] == 'e'){
-                    record.add(new Record(,"");
                 }
             }
             for (int j = 0; j < 9994; j++){

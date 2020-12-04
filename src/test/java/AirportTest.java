@@ -99,7 +99,6 @@ public class AirportTest {
             assertEquals(houseKeeper, baggageScanner.getHouseKeeper());
             assertEquals(officerO2, federalPoliceOffice.getOfficers()[0]);
             assertEquals(officerO3, federalPoliceOffice.getOfficers()[1]);
-            //T
         }
         catch (ParseException e) {
             e.printStackTrace();

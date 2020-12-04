@@ -3,6 +3,8 @@ package employee;
 import baggage.HandBaggage;
 import baggageScanner.TestStripe;
 import baggageScanner.conveyingComponents.Tray;
+import baggageScanner.operatingStation.Scanner;
+import configuration.Configuration;
 import employee.id.IDCard;
 import employee.id.ProfileType;
 
@@ -37,5 +39,16 @@ public class Inspector extends Employee {
 
     public Boolean getSenior() {
         return isSenior;
+    }
+
+    public void swipeCard() {
+        Scanner scanner = this.getBaggageScanner().getOperatingStation().getScanner();
+        boolean isAllowed = scanner.swipeCard(this.getIdCard());
+        if(isAllowed){
+            String magnetStripeContent =Configuration.instance.aes.decrypt(getIdCard().getMagnetStripe().getContent(), Configuration.instance.secretKey);
+            String[] magnetStripeContentArray = magnetStripeContent.replace("***", "*").split("\\*");
+
+            boolean pinValidated = scanner.inputPIN(magnetStripeContentArray[3]);
+        }
     }
 }

@@ -34,7 +34,7 @@ public class Passenger {
 
             if(baggageInfoList.size() > 0) {
                 for (String[] info : baggageInfoList) {
-                    if (Integer.parseInt(info[1]) == i) {
+                    if (Integer.parseInt(info[1]) == i + 1) {
                         hasIllegalItem = true;
                         information[0] = info[0];
                         information[1] = info[2];
