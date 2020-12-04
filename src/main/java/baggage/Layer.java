@@ -22,4 +22,5 @@ public class Layer {
     public char[] getContent() {
         return content;
     }
+
 }

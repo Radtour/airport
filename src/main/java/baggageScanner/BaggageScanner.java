@@ -13,6 +13,9 @@ import employee.Technician;
 import federalPolice.FederalPoliceOffice;
 import federalPolice.FederalPoliceOfficer;
 
+import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,7 +46,7 @@ public class BaggageScanner {
         houseKeeper.setBaggageScanner(this);
 
 
-        record = new ArrayList<Record>();
+        record = new ArrayList<>();
 
         supervision = new Supervision(supervisorS0,this);
         operatingStation = new OperatingStation(inspectorI2,this);
@@ -104,7 +107,12 @@ public class BaggageScanner {
         return manualPostControl;
     }
 
+    public List<Record> getRecord() {
+        return record;
+    }
+
     public void scan(HandBaggage handBaggage){
+        boolean clean = true;
         for(int i = 0; i < 5; i++){
             for (int j = 0; j < 9996; j++){
                 if(handBaggage.getLayers()[i].getContent()[j] == 'k'
@@ -112,6 +120,10 @@ public class BaggageScanner {
                         && handBaggage.getLayers()[i].getContent()[j+2] == '!'
                         && handBaggage.getLayers()[i].getContent()[j+3] == 'f'
                         && handBaggage.getLayers()[i].getContent()[j+4] == 'e'){
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss,SSS");
+                    LocalDateTime now = LocalDateTime.now();
+                    record.add(new Record(dtf.format(now),"prohibited item | knife detected at position" + i + "," + j));
+                    clean = false;
                 }
             }
             for (int j = 0; j < 9994; j++){
@@ -122,7 +134,10 @@ public class BaggageScanner {
                         && handBaggage.getLayers()[i].getContent()[j+4] == 'k'
                         && handBaggage.getLayers()[i].getContent()[j+5] == '|'
                         && handBaggage.getLayers()[i].getContent()[j+6] == '7'){
-
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss,SSS");
+                    LocalDateTime now = LocalDateTime.now();
+                    record.add(new Record(dtf.format(now),"prohibited item | weapon-glock7 detected at position" + i + "," + j));
+                    clean = false;
                 }
             }
             for (int j = 0; j < 9992; j++){
@@ -135,11 +150,17 @@ public class BaggageScanner {
                         && handBaggage.getLayers()[i].getContent()[j+6] == '!'
                         && handBaggage.getLayers()[i].getContent()[j+7] == 'v'
                         && handBaggage.getLayers()[i].getContent()[j+8] == 'e'){
-
-
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss,SSS");
+                    LocalDateTime now = LocalDateTime.now();
+                    record.add(new Record(dtf.format(now),"prohibited item | explosive detected at position" + i + "," + j));
+                    clean = false;
                 }
             }
         }
-
+        if(clean){
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss,SSS");
+            LocalDateTime now = LocalDateTime.now();
+            record.add(new Record(dtf.format(now),"clean"));
+        }
     }
 }
