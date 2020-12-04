@@ -15,14 +15,16 @@ import org.junit.jupiter.api.*;
 
 import java.io.*;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AirportTest {
+    @BeforeEach
+    public void cleanup(){
+        HandBaggage.setHandBaggageHashSet(new HashSet<>());
+    }
+
     @Test
     @Order(1)
     public void init(){

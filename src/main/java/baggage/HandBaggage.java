@@ -101,4 +101,8 @@ public class HandBaggage {
     public static void addHandBaggageToHashSet(HandBaggage handBaggage){
         handBaggageHashSet.add(handBaggage);
     }
+
+    public static void setHandBaggageHashSet(HashSet<HandBaggage> handBaggageHashSet) {
+        HandBaggage.handBaggageHashSet = handBaggageHashSet;
+    }
 }
