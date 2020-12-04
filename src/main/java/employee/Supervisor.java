@@ -22,7 +22,7 @@ public class Supervisor extends Employee {
     }
 
     public void unlockBaggageScanner(){
-        supervision.getBaggageScanner().setStatus(BaggageScannerStatus.activated);
+        supervision.getBaggageScanner().unlock(this);
     }
 
     public Boolean getExecutive() {

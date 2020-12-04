@@ -21,6 +21,7 @@ public abstract class Employee {
         this.birthDate = birthDate;
         this.id = UUID.randomUUID().toString();
         this.idCard = idCard;
+        idCard.setEmployee(this);
     }
 
     public ProfileType getProfileType() {

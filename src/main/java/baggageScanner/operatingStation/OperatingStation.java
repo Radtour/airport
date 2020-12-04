@@ -26,15 +26,15 @@ public class OperatingStation {
     }
 
     public void pushRectagleButton(){
-        rectangleButton.push(baggageScanner);
+        rectangleButton.push(inspector);
     }
 
     public void pushLeftButton(){
-        leftButton.push(baggageScanner);
+        leftButton.push(inspector);
     }
 
     public void pushRightButton(){
-        rightButton.push(baggageScanner);
+        rightButton.push(inspector);
     }
 
     public LeftButton getLeftButton() {

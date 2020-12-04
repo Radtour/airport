@@ -1,6 +1,7 @@
 package baggageScanner.buttons;
 
 import baggageScanner.BaggageScanner;
+import employee.Employee;
 
 public abstract class Button {
 
@@ -8,5 +9,5 @@ public abstract class Button {
 
     }
 
-    public abstract void push(BaggageScanner baggageScanner);
+    public abstract void push(Employee employee);
 }

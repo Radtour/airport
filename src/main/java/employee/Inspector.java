@@ -52,7 +52,7 @@ public class Inspector extends Employee {
             if(scanner.isIDCardLocked(this.getIdCard())){
                 boolean pinValidated = scanner.inputPIN(magnetStripeContentArray[3]);
                 if(pinValidated){
-                    this.getBaggageScanner().setStatus(BaggageScannerStatus.activated);
+                    this.getBaggageScanner().activate(this);
                 }
             }
         }

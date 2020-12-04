@@ -6,10 +6,8 @@ import baggageScanner.conveyingComponents.RollerConveyor;
 import baggageScanner.conveyingComponents.Track;
 import baggageScanner.operatingStation.OperatingStation;
 import configuration.Configuration;
-import employee.HouseKeeper;
-import employee.Inspector;
-import employee.Supervisor;
-import employee.Technician;
+import employee.*;
+import employee.id.ProfileManager;
 import federalPolice.FederalPoliceOffice;
 import federalPolice.FederalPoliceOfficer;
 
@@ -61,10 +59,6 @@ public class BaggageScanner {
         tracks[0] = new Track(1);
         tracks[1] = new Track(2);
 
-    }
-
-    public void setStatus(BaggageScannerStatus status) {
-        this.status = status;
     }
 
     public BaggageScannerStatus getStatus() {
@@ -162,5 +156,50 @@ public class BaggageScanner {
             LocalDateTime now = LocalDateTime.now();
             record.add(new Record(dtf.format(now),"clean"));
         }
+    }
+
+    public void moveBeltForward() {
+        //TODO: do something
+    }
+    public void moveBeltBackwards() {
+        //TODO: do something
+    }
+
+    public void alarm() {
+        //TODO: do something
+    }
+    public void report() {
+        //TODO: do something
+    }
+    public void maintenance() {
+        //TODO: do something
+    }
+
+    public boolean unlock(Employee employee){
+        if(ProfileManager.isAllowedToUnlock(employee)){
+            status = BaggageScannerStatus.activated;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean activate(Employee employee) {
+        if(ProfileManager.isAllowedToActivate(employee)){
+            status = BaggageScannerStatus.activated;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean start(Employee employee) {
+        if(ProfileManager.isAllowedToStart(employee)){
+            status = BaggageScannerStatus.deactivated;
+            return true;
+        }
+        return false;
+    }
+
+    public void setStatus(BaggageScannerStatus status) {
+        this.status = status;
     }
 }

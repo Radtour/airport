@@ -18,11 +18,11 @@ public class Supervision {
     }
 
     public void startBaggageScanner(){
-        startButton.push(baggageScanner);
+        startButton.push(supervisor);
     }
 
     public void shutdownBaggageScanner(){
-        shutdownButton.push(baggageScanner);
+        shutdownButton.push(supervisor);
     }
 
     public Supervisor getSupervisor() {

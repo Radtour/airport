@@ -31,4 +31,16 @@ public class ProfileManager {
     public static boolean isAllowedToUseMaintenance(Employee employee){
         return employee.getProfileType() == ProfileType.T;
     }
+
+    public static boolean isAllowedToStart(Employee employee){
+        return employee.getProfileType() == ProfileType.S;
+    }
+
+    public static boolean isAllowedToUnlock(Employee employee){
+        return employee.getProfileType() == ProfileType.S;
+    }
+
+    public static boolean isAllowedToActivate(Employee employee) {
+        return employee.getProfileType() == ProfileType.I;
+    }
 }
