@@ -143,7 +143,7 @@ public class AirportTest {
         assertFalse(inspectorI1.getIdCard().getLocked());
         scanner.inputPIN("WRONG");
         assertFalse(inspectorI1.getIdCard().getLocked());
-        scanner.inputPIN("WRONG");
+        scanner.inputPIN("SCHING SCHONG DEIN PIN IS WRONG");
         assertFalse(inspectorI1.getIdCard().getLocked());
         scanner.inputPIN("WRONG");
         assertTrue(inspectorI1.getIdCard().getLocked());
