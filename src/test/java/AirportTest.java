@@ -240,7 +240,31 @@ public class AirportTest {
     @Test
     @Order(10)
     public void logScans(){
+            initOfficeAndBaggageScanner();
 
+            Passenger passenger1 = new Passenger("Mustaf Ali Baba",2,"");
+            Passenger passenger2 = new Passenger("Meister Propper",1,"E,1,3");
+            Passenger passenger3 = new Passenger("Jensy Boy",3,"");
+            Passenger passenger4 = new Passenger("Not nothacker",1,"");
+            Passenger passenger5 = new Passenger("Krisch",3,"");
+
+            baggageScanner.scan(passenger1.getHandBaggages()[0]);
+            baggageScanner.scan(passenger1.getHandBaggages()[1]);
+            baggageScanner.scan(passenger2.getHandBaggages()[0]);
+            baggageScanner.scan(passenger3.getHandBaggages()[0]);
+            baggageScanner.scan(passenger3.getHandBaggages()[1]);
+            baggageScanner.scan(passenger3.getHandBaggages()[2]);
+            baggageScanner.scan(passenger4.getHandBaggages()[0]);
+            baggageScanner.scan(passenger5.getHandBaggages()[0]);
+            baggageScanner.scan(passenger5.getHandBaggages()[1]);
+            baggageScanner.scan(passenger5.getHandBaggages()[2]);
+
+            assertEquals(passenger1.getHandBaggages().length
+                    +passenger2.getHandBaggages().length
+                    +passenger3.getHandBaggages().length
+                    +passenger4.getHandBaggages().length
+                    +passenger5.getHandBaggages().length
+                    ,baggageScanner.getRecord().size());
     }
 
     @Test
