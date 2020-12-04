@@ -28,12 +28,22 @@ public class Scanner {
     public boolean inputPIN(String pin) {
 
         String decryptedMagnetStripe = Configuration.instance.aes.decrypt(currentIDCard.getMagnetStripe().getContent(), Configuration.instance.secretKey);
-        if(decryptedMagnetStripe.contains(pin)){
-            return true;
+        if(!currentIDCard.getLocked()){
+            if(decryptedMagnetStripe.contains(pin)){
+                return true;
+            }
+            else {
+                currentIDCard.addFailedAttempts();
+                if(currentIDCard.getFailedAttempts() == 3){
+                    currentIDCard.setLocked(true);
+                }
+                return false;
+            }
         }
-        else {
-            currentIDCard.addFailedAttempts();
-            return false;
-        }
+        return false;
+    }
+
+    public boolean isIDCardLocked(IDCard idCard){
+        return idCard.getLocked();
     }
 }

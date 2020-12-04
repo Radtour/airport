@@ -9,8 +9,8 @@ import java.util.Date;
 public class IDCard {
     private final String id;
     private final Date validUntil;
-    private final Boolean isLocked;
     private final IDType type;
+    private Boolean isLocked;
     private MagnetStripe magnetStripe;
     private Employee employee;
     private int failedAttempts;
@@ -63,5 +63,9 @@ public class IDCard {
 
     public int getFailedAttempts() {
         return failedAttempts;
+    }
+
+    public void setLocked(Boolean locked) {
+        isLocked = locked;
     }
 }

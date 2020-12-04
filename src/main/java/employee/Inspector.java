@@ -1,6 +1,7 @@
 package employee;
 
 import baggage.HandBaggage;
+import baggageScanner.BaggageScannerStatus;
 import baggageScanner.TestStripe;
 import baggageScanner.conveyingComponents.Tray;
 import baggageScanner.operatingStation.Scanner;
@@ -41,14 +42,21 @@ public class Inspector extends Employee {
         return isSenior;
     }
 
-    public void swipeCard() {
+    public boolean swipeCard() {
         Scanner scanner = this.getBaggageScanner().getOperatingStation().getScanner();
         boolean isAllowed = scanner.swipeCard(this.getIdCard());
         if(isAllowed){
             String magnetStripeContent =Configuration.instance.aes.decrypt(getIdCard().getMagnetStripe().getContent(), Configuration.instance.secretKey);
             String[] magnetStripeContentArray = magnetStripeContent.replace("***", "*").split("\\*");
 
-            boolean pinValidated = scanner.inputPIN(magnetStripeContentArray[3]);
+            if(scanner.isIDCardLocked(this.getIdCard())){
+                boolean pinValidated = scanner.inputPIN(magnetStripeContentArray[3]);
+                if(pinValidated){
+                    this.getBaggageScanner().setStatus(BaggageScannerStatus.activated);
+                }
+            }
         }
+
+        return false;
     }
 }
