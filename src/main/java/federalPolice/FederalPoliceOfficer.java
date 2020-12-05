@@ -25,24 +25,21 @@ public class FederalPoliceOfficer extends Employee {
         office.sendBackUp(this.getBaggageScanner());
     }
 
-    public char[][] operationDefuse(HandBaggage handBaggage){
-        return office.randomRobocopDestroyHandBaggage(handBaggage);
-    }
-
     public void setOffice(FederalPoliceOffice office){
         this.office = office;
     }
 
     public void openBaggage(HandBaggage handBaggage){
         takeoutWeapon(handBaggage);
+        showWeapon();
     }
 
     public void takeoutWeapon(HandBaggage handBaggage){
         int index = this.getBaggageScanner().getRecords().size();
         String result = this.getBaggageScanner().getRecords().get(index - 1).getResult();
-        int layer = result.charAt(result.length()-1);
+        char layerChar = result.charAt(result.length()-1);
+        int layer = Integer.parseInt(String.valueOf(layerChar));
         handBaggage.getLayers()[layer].clearLayer();
-        showWeapon();
     }
 
     public void showWeapon(){
@@ -75,5 +72,13 @@ public class FederalPoliceOfficer extends Employee {
 
     public char[][] controlRobocop(Remote remote,HandBaggage handBaggage){
         return remote.use(handBaggage);
+    }
+
+    public FederalPoliceOffice getOffice() {
+        return office;
+    }
+
+    public String getGrade() {
+        return grade;
     }
 }

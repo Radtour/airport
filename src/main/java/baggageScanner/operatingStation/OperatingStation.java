@@ -5,6 +5,7 @@ import baggageScanner.buttons.Button;
 import baggageScanner.buttons.LeftButton;
 import baggageScanner.buttons.RectangleButton;
 import baggageScanner.buttons.RightButton;
+import baggageScanner.conveyingComponents.Tray;
 import employee.Inspector;
 
 public class OperatingStation {

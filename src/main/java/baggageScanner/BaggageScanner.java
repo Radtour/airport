@@ -181,8 +181,8 @@ public class BaggageScanner {
 
     public boolean alarm(Employee employee) {
         if(ProfileManager.isAllowedToUseAlarm(employee) && ProfileManager.isAllowedToUseBaggageScanner(employee)){
-
-
+            setStatus(BaggageScannerStatus.locked);
+            getOfficer().arrest(getManualPostControl().getCurrentPassenger());
             return true;
         }
         return false;
@@ -241,7 +241,7 @@ public class BaggageScanner {
         this.currentTrayInScanner = currentTrayInScanner;
     }
 
-    public void simulation(Passenger passenger){
+    public boolean simulation(Passenger passenger){
         getSupervision().getSupervisor().pushStartButton();
         if(getStatus() == BaggageScannerStatus.deactivated){
             boolean validated = getOperatingStation().getInspector().swipeCard();
@@ -254,13 +254,37 @@ public class BaggageScanner {
                     getRollerConveyor().addTrayQueue(tray);
                 }
 
-                for(Tray tray : getRollerConveyor().getTrays()){
+                while(!getRollerConveyor().getTrays().isEmpty()){
+                    Tray tray = getRollerConveyor().getTrays().poll();
                     getOperatingStation().getInspector().push(tray);
                     getOperatingStation().pushRightButton();
                     getOperatingStation().pushRectagleButton();
-                    Record record = getRecords().get(getRecords().size());
+                    Record record = getRecords().get(getRecords().size() - 1);
+                    if(record.getResult().contains("clean")){
+                        tracks[1].addTrayToList(tray);
+                        setCurrentTrayInScanner(null);
+
+                    }
+                    else if(record.getResult().contains("knife")){
+                        tracks[0].addTrayToList(tray);
+                        setCurrentTrayInScanner(null);
+                        getManualPostControl().getInspector().inspect();
+                        Record recordRetry = getRecords().get(getRecords().size() - 1);
+                        if(recordRetry.getResult().contains("clean")){
+                            tracks[1].addTrayToList(tray);
+                            setCurrentTrayInScanner(null);
+                        }
+                    }
+                    else{
+                        tracks[0].addTrayToList(tray);
+                        setCurrentTrayInScanner(null);
+                        alarm(getOperatingStation().getInspector());
+                        return true;
+                    }
                 }
+                return true;
             }
         }
+        return false;
     }
 }

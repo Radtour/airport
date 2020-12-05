@@ -10,6 +10,7 @@ import java.util.SimpleTimeZone;
 public class FederalPoliceOffice {
     private Robocop[] robocop;
     private FederalPoliceOfficer[] officers;
+    private HandBaggage[] perceivedHandBaggage;
     public FederalPoliceOffice(FederalPoliceOfficer officer01, FederalPoliceOfficer officer02, FederalPoliceOfficer officer03){
         robocop = new Robocop[3];
         for(int i = 0; i < 3; i++){
@@ -22,19 +23,7 @@ public class FederalPoliceOffice {
         officer03.setOffice(this);
         officers[2] = officer01;
         officer01.setOffice(this);
-    }
-
-    public char[][] randomRobocopDestroyHandBaggage(HandBaggage handBaggage){
-        boolean robotsend = false;
-        for (int i = 0; i < 3; i++){
-            if(robocop[i].isAtAirport()){
-                return robocop[i].getRemote().use(handBaggage);
-                robotsend = true;
-            }
-        }
-        if (!robotsend){
-            return null;
-        }
+        this.perceivedHandBaggage = new HandBaggage[3];
     }
 
     public boolean sendRandomRobocop(){
@@ -53,22 +42,40 @@ public class FederalPoliceOffice {
         return robocop;
     }
 
-    public void sendBackUp(BaggageScanner baggageScanner){
-        if(baggageScanner.getRecords().get(baggageScanner.getRecords().size()-1).getResult().contains("Glock")){
-            officers[2].openBaggage(baggageScanner.getCurrentTrayInScanner().getHandBaggage());
+    public boolean sendBackUp(BaggageScanner baggageScanner){
+        if(baggageScanner.getRecords().get(baggageScanner.getRecords().size()-1).getResult().contains("glock")){
+            officers[2].openBaggage(baggageScanner.getTracks()[0].getTrayList().poll().getHandBaggage());
+            return true;
         }
-        if(baggageScanner.getRecords().get(baggageScanner.getRecords().size()-1).getResult().contains("Explosive")){
-            if(sendRandomRobocop()){
-                int i;
-                for (i = 0; i < 3 ; i++){
-                    if (robocop[i].isAtAirport()){
-                        break;
-                    }
-                }
-                //TODO bitte handbaggage uebergeben
-                char [][] destroyedHandbaggage = officers[0].controlRobocop(robocop[i].getRemote());
-
+        if(baggageScanner.getRecords().get(baggageScanner.getRecords().size()-1).getResult().contains("explosive")){
+            if(startExplosiveRemoval(baggageScanner)){
+                return true;
             }
         }
+        return false;
+    }
+
+    public boolean startExplosiveRemoval(BaggageScanner baggageScanner){
+        if(sendRandomRobocop()){
+            int i;
+            for (i = 0; i < 3 ; i++){
+                if (robocop[i].isAtAirport()){
+                    break;
+                }
+            }
+            HandBaggage handBaggage = baggageScanner.getTracks()[0].getTrayList().poll().getHandBaggage();
+            char [][] destroyedHandBaggage = officers[0].controlRobocop(robocop[i].getRemote(), handBaggage);
+            handBaggage.setDestroyedHandBaggage(destroyedHandBaggage);
+            return true;
+        }
+        return false;
+    }
+
+    public void setPerceivedHandBaggage(HandBaggage[] perceivedHandBaggage) {
+        this.perceivedHandBaggage = perceivedHandBaggage;
+    }
+
+    public HandBaggage[] getPerceivedHandBaggage() {
+        return perceivedHandBaggage;
     }
 }

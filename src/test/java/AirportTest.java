@@ -269,30 +269,6 @@ public class AirportTest {
     Stream<DynamicTest> logScans(){
             initOfficeAndBaggageScanner();
 
-            /*Passenger passenger1 = new Passenger("Mustaf Ali Baba",2,"-");
-            Passenger passenger2 = new Passenger("Meister Propper",1,"E,1,3");
-            Passenger passenger3 = new Passenger("Jensy Boy",3,"-");
-            Passenger passenger4 = new Passenger("Not nothacker",1,"-");
-            Passenger passenger5 = new Passenger("Krisch",3,"-");
-
-            baggageScanner.scan(passenger1.getHandBaggages()[0]);
-            baggageScanner.scan(passenger1.getHandBaggages()[1]);
-            baggageScanner.scan(passenger2.getHandBaggages()[0]);
-            baggageScanner.scan(passenger3.getHandBaggages()[0]);
-            baggageScanner.scan(passenger3.getHandBaggages()[1]);
-            baggageScanner.scan(passenger3.getHandBaggages()[2]);
-            baggageScanner.scan(passenger4.getHandBaggages()[0]);
-            baggageScanner.scan(passenger5.getHandBaggages()[0]);
-            baggageScanner.scan(passenger5.getHandBaggages()[1]);
-            baggageScanner.scan(passenger5.getHandBaggages()[2]);
-
-            assertEquals(passenger1.getHandBaggages().length
-                    +passenger2.getHandBaggages().length
-                    +passenger3.getHandBaggages().length
-                    +passenger4.getHandBaggages().length
-                    +passenger5.getHandBaggages().length
-                    ,baggageScanner.getRecords().size());*/
-
         return DataSet.parsePassengerBaggageFile("passenger_baggage.txt")
                 .map(dataSet -> dynamicTest(getDisplayNameLogScans(dataSet), () -> {
                     var passenger = new Passenger(dataSet.getPassengerName(), dataSet.getHandBaggageAmount(), dataSet.getHandBaggageContent());
@@ -339,9 +315,19 @@ public class AirportTest {
 
         Passenger passenger = new Passenger("Klaus Mayer Max Mustermann",3,"-");
 
+        boolean simulationSuccess =  baggageScanner.simulation(passenger);
+
+        assertTrue(simulationSuccess);
+
         for(Record record: baggageScanner.getRecords()){
             assertTrue(record.getResult().contains("clean"));
         }
+
+        assertFalse(passenger.isArrested());
+
+        assertEquals(passenger.getHandBaggages()[0], Objects.requireNonNull(baggageScanner.getTracks()[1].getTrayList().poll()).getHandBaggage());
+        assertEquals(passenger.getHandBaggages()[1], Objects.requireNonNull(baggageScanner.getTracks()[1].getTrayList().poll()).getHandBaggage());
+        assertEquals(passenger.getHandBaggages()[2], Objects.requireNonNull(baggageScanner.getTracks()[1].getTrayList().poll()).getHandBaggage());
     }
 
     @Order(12)
@@ -349,21 +335,53 @@ public class AirportTest {
     public void knifeFound(){
         initOfficeAndBaggageScanner();
 
-        Passenger passenger = new Passenger("Klaus Mayer Max Mustermann",1,"K,1,1");
+        Passenger passenger = new Passenger("Klaus Mayer Max Messermann",1,"K,1,1");
+
+        boolean simulationSuccess =  baggageScanner.simulation(passenger);
+
+        assertTrue(simulationSuccess);
 
         var records = baggageScanner.getRecords();
         assertTrue(records.get(0).getResult().contains("knife"));
+        assertTrue(records.get(1).getResult().contains("clean"));
+
+        assertEquals(passenger.getHandBaggages()[0], Objects.requireNonNull(baggageScanner.getTracks()[1].getTrayList().poll()).getHandBaggage());
     }
 
     @Order(13)
     @Test
     public void gunFound(){
+        initOfficeAndBaggageScanner();
 
+        Passenger passenger = new Passenger("Nicolas Myers",2,"W,1,4");
+
+        boolean simulationSuccess =  baggageScanner.simulation(passenger);
+
+        assertTrue(simulationSuccess);
+
+        var records = baggageScanner.getRecords();
+        assertTrue(records.get(0).getResult().contains("weapon"));
+        assertTrue(passenger.isArrested());
     }
 
     @Order(14)
     @Test
     public void explosiveFound(){
+        initOfficeAndBaggageScanner();
 
+        Passenger passenger = new Passenger("Nicolas Myers",1,"E,1,5");
+
+        assertNotNull(passenger.getHandBaggages()[0].getLayers());
+        assertNull(passenger.getHandBaggages()[0].getDestroyedHandBaggage());
+
+        boolean simulationSuccess =  baggageScanner.simulation(passenger);
+
+        assertTrue(simulationSuccess);
+
+        var records = baggageScanner.getRecords();
+        assertTrue(records.get(0).getResult().contains("explosive"));
+        assertTrue(passenger.isArrested());
+        assertNull(passenger.getHandBaggages()[0].getLayers());
+        assertNotNull(passenger.getHandBaggages()[0].getDestroyedHandBaggage());
     }
 }

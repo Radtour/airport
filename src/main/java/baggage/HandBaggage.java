@@ -8,8 +8,8 @@ import java.util.Random;
 public class HandBaggage {
 
     private static HashSet<HandBaggage> handBaggageHashSet = new HashSet<>();
-
     private Layer[] layers;
+    private char [][] destroyedHandBaggage;
 
     public HandBaggage(String[] baggageInfo){
         this.layers = new Layer[Configuration.instance.layerAmount];
@@ -104,5 +104,14 @@ public class HandBaggage {
 
     public static void setHandBaggageHashSet(HashSet<HandBaggage> handBaggageHashSet) {
         HandBaggage.handBaggageHashSet = handBaggageHashSet;
+    }
+
+    public void setDestroyedHandBaggage(char[][] destroyedHandBaggage) {
+        this.layers = null;
+        this.destroyedHandBaggage = destroyedHandBaggage;
+    }
+
+    public char[][] getDestroyedHandBaggage() {
+        return destroyedHandBaggage;
     }
 }

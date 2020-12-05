@@ -2,6 +2,7 @@ package employee;
 
 import baggage.HandBaggage;
 import baggageScanner.BaggageScannerStatus;
+import baggageScanner.Record;
 import baggageScanner.ExplosiveTraceDetector;
 import baggageScanner.TestStripe;
 import baggageScanner.conveyingComponents.Tray;
@@ -11,6 +12,7 @@ import employee.id.IDCard;
 import employee.id.ProfileType;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Inspector extends Employee {
     private final Boolean isSenior;
@@ -56,10 +58,13 @@ public class Inspector extends Employee {
             String magnetStripeContent =Configuration.instance.aes.decrypt(getIdCard().getMagnetStripe().getContent(), Configuration.instance.secretKey);
             String[] magnetStripeContentArray = magnetStripeContent.replace("***", "*").split("\\*");
 
-            if(scanner.isIDCardLocked(this.getIdCard())){
-                boolean pinValidated = scanner.inputPIN(magnetStripeContentArray[3]);
+            if(!scanner.isIDCardLocked(this.getIdCard())){
+                boolean pinValidated = scanner.inputPIN(magnetStripeContentArray[2]);
                 if(pinValidated){
-                    this.getBaggageScanner().activate(this);
+                    boolean activationSuccess = this.getBaggageScanner().activate(this);
+                    if(activationSuccess){
+                        return true;
+                    }
                 }
             }
         }
@@ -69,6 +74,51 @@ public class Inspector extends Employee {
 
     public void scanRemainingBaggage(){
         //TODO mach hier auch deinen shit
-        getBaggageScanner().
+        for(int i = 0; i < getBaggageScanner().getBelt().getTrays().size(); i++){
+            getBaggageScanner().getOperatingStation().pushRightButton();
+            getBaggageScanner().getOperatingStation().pushRectagleButton();
+            Record record = getBaggageScanner().getRecords().get(getBaggageScanner().getRecords().size() - 1);
+            if(record.getResult().contains("clean")){
+                getBaggageScanner().getTracks()[1].addTrayToList(getBaggageScanner().getCurrentTrayInScanner());
+                getBaggageScanner().setCurrentTrayInScanner(null);
+            }
+            else if(record.getResult().contains("knife")){
+                getBaggageScanner().getTracks()[0].addTrayToList(getBaggageScanner().getCurrentTrayInScanner());
+                getBaggageScanner().setCurrentTrayInScanner(null);
+                getBaggageScanner().getManualPostControl().getInspector().inspect();
+                Record recordRetry = getBaggageScanner().getRecords().get(getBaggageScanner().getRecords().size() - 1);
+                if(recordRetry.getResult().contains("clean")){
+                    getBaggageScanner().getTracks()[1].addTrayToList(getBaggageScanner().getCurrentTrayInScanner());
+                    getBaggageScanner().setCurrentTrayInScanner(null);
+                }
+            }
+            else if(record.getResult().contains("weapon")){
+                Tray tray = getBaggageScanner().getCurrentTrayInScanner();
+                getBaggageScanner().getTracks()[0].addTrayToList(tray);
+                getBaggageScanner().setCurrentTrayInScanner(null);
+                getBaggageScanner().getOfficer().takeoutWeapon(tray.getHandBaggage());
+            }
+            else if(record.getResult().contains("explosive")){
+                Tray tray = getBaggageScanner().getCurrentTrayInScanner();
+                getBaggageScanner().getTracks()[0].addTrayToList(tray);
+                getBaggageScanner().setCurrentTrayInScanner(null);
+                getBaggageScanner().getOfficer().getOffice().startExplosiveRemoval(getBaggageScanner());
+            }
+        }
+    }
+
+    public void inspect() {
+        Tray tray = getBaggageScanner().getTracks()[0].getTrayList().peek();
+        takeOutKnife(tray.getHandBaggage());
+        getBaggageScanner().getOperatingStation().pushLeftButton();
+        getBaggageScanner().getOperatingStation().pushRectagleButton();
+    }
+
+    private void takeOutKnife(HandBaggage handBaggage){
+        int index = this.getBaggageScanner().getRecords().size();
+        String result = this.getBaggageScanner().getRecords().get(index - 1).getResult();
+        char layerChar = result.charAt(result.length()-1);
+        int layer = Integer.parseInt(String.valueOf(layerChar));
+        handBaggage.getLayers()[layer].clearLayer();
     }
 }

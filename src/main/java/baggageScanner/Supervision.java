@@ -15,6 +15,7 @@ public class Supervision {
         supervisor.setSupervision(this);
         startButton = new StartButton();
         shutdownButton = new ShutdownButton();
+        this.baggageScanner = baggageScanner;
     }
 
     public void startBaggageScanner(){
