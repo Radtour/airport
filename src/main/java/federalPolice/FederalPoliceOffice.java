@@ -31,6 +31,11 @@ public class FederalPoliceOffice {
         return robocop[robot].getRemote().use(handBaggage);
     }
 
+    public void sendRandomRobocom(){
+        Random random = new Random();
+        int robot = random.nextInt(3);
+    }
+
     public FederalPoliceOfficer[] getOfficers() {
         return officers;
     }

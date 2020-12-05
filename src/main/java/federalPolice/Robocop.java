@@ -5,6 +5,7 @@ import baggage.HandBaggage;
 public class Robocop {
     private HighPressureWaterJet highPressureWaterJet;
     private Remote remote;
+    private boolean isAtAirport;
     public Robocop() {
         highPressureWaterJet = new HighPressureWaterJet();
         remote = new Remote(this);
@@ -31,5 +32,13 @@ public class Robocop {
 
     public Remote getRemote() {
         return remote;
+    }
+
+    public boolean isAtAirport() {
+        return isAtAirport;
+    }
+
+    public void setAtAirport(boolean atAirport) {
+        isAtAirport = atAirport;
     }
 }

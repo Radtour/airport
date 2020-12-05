@@ -64,4 +64,9 @@ public class Inspector extends Employee {
 
         return false;
     }
+
+    public void scanRemainingBaggage(){
+        //TODO mach hier auch deinen shit
+        getBaggageScanner().
+    }
 }
