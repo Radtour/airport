@@ -18,7 +18,7 @@ public class Passenger {
 
         this.handBaggages = new HandBaggage[handBaggageAmount];
 
-        if(!baggageInfoString.isEmpty()){
+        if(!baggageInfoString.contains("-")){
 
             var baggageInfo = baggageInfoString.split(";");
 

@@ -19,8 +19,10 @@ import org.junit.jupiter.api.*;
 import java.io.*;
 import java.text.ParseException;
 import java.util.*;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 public class AirportTest {
     @BeforeEach
@@ -86,40 +88,23 @@ public class AirportTest {
         }
     }
 
-    @Test
     @Order(1)
-    public void correctInit(){
-        List<Passenger> passengers = new ArrayList<>();
-        try {
-            FileReader fileReader = new FileReader("data/passenger_baggage.txt");
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-            String give;
-
-            //TODO zeile für zeile einlesen bis datei leer ist
-            for(int i=0; i<568; i++){
-                String line = bufferedReader.readLine();
-                String[] split = line.split(";");
-                if(split.length>3){
-                    split[2]= split[2] + ";" + split[3];
-                }
-                if(split[2].equals("-")){
-                    give = "";
-                }
-                else {
-                    give = split[2].substring(1,split[2].length()-1);
-                }
-                passengers.add(new Passenger(split[0],Integer.parseInt(split[1]),give));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Assertions.assertEquals(568, passengers.size());
-        Assertions.assertEquals(609, HandBaggage.getHandBaggageHashSet().size());
+    @TestFactory
+    Stream<DynamicTest> correctInit(){
+        return DataSet.parsePassengerBaggageFile("passenger_baggage.txt")
+                .map(dataSet -> dynamicTest(getDisplayName(dataSet), () -> {
+                    var passenger = new Passenger(dataSet.getPassengerName(), dataSet.getHandBaggageAmount(), dataSet.getHandBaggageContent());
+                    assertTrue(passenger.getName().equals(dataSet.getPassengerName()));
+                    assertEquals(dataSet.getHandBaggageAmount(), passenger.getHandBaggages().length);
+                }));
     }
 
-    @Test
+    String getDisplayName(DataSet dataSet){
+        return dataSet.getPassengerNumber() + " " + dataSet.getPassengerName() + " " + dataSet.getHandBaggageAmount() + " " + dataSet.getHandBaggageContent();
+    }
+
     @Order(2)
+    @Test
     public void setBaggageScannerAndEmployees(){
         initOfficeAndBaggageScanner();
 
@@ -134,8 +119,8 @@ public class AirportTest {
         assertEquals(officerO3, federalPoliceOffice.getOfficers()[1]);
     }
 
-    @Test
     @Order(3)
+    @Test
     public void threeTimeWrongPin(){
         initOfficeAndBaggageScanner();
         Scanner scanner = baggageScanner.getOperatingStation().getScanner();
@@ -149,8 +134,8 @@ public class AirportTest {
         assertTrue(inspectorI1.getIdCard().getLocked());
     }
 
-    @Test
     @Order(4)
+    @Test
     public void profileKO(){
         initOfficeAndBaggageScanner();
 
@@ -167,14 +152,49 @@ public class AirportTest {
         assertFalse(scanner.swipeCard(houseKeeper.getIdCard()));
     }
 
-    @Test
     @Order(5)
+    @Test
     public void onlyFans(){
+        initOfficeAndBaggageScanner();
 
+        assertTrue(ProfileManager.isAllowedToUseMoveBeltBackward(inspectorI1));
+        assertTrue(ProfileManager.isAllowedToUseMoveBeltForward(inspectorI1));
+        assertTrue(ProfileManager.isAllowedToUseBaggageScanner(inspectorI1));
+        assertTrue(ProfileManager.isAllowedToUseAlarm(inspectorI1));
+        assertFalse(ProfileManager.isAllowedToUseReport(inspectorI1));
+        assertFalse(ProfileManager.isAllowedToUseMaintenance(inspectorI1));
+
+        assertFalse(ProfileManager.isAllowedToUseMoveBeltBackward(officerO1));
+        assertFalse(ProfileManager.isAllowedToUseMoveBeltForward(officerO1));
+        assertFalse(ProfileManager.isAllowedToUseBaggageScanner(officerO1));
+        assertFalse(ProfileManager.isAllowedToUseAlarm(officerO1));
+        assertFalse(ProfileManager.isAllowedToUseReport(officerO1));
+        assertFalse(ProfileManager.isAllowedToUseMaintenance(officerO1));
+
+        assertFalse(ProfileManager.isAllowedToUseMoveBeltBackward(supervisorS));
+        assertFalse(ProfileManager.isAllowedToUseMoveBeltForward(supervisorS));
+        assertTrue(ProfileManager.isAllowedToUseBaggageScanner(supervisorS));
+        assertFalse(ProfileManager.isAllowedToUseAlarm(supervisorS));
+        assertTrue(ProfileManager.isAllowedToUseReport(supervisorS));
+        assertFalse(ProfileManager.isAllowedToUseMaintenance(supervisorS));
+
+        assertFalse(ProfileManager.isAllowedToUseMoveBeltBackward(houseKeeper));
+        assertFalse(ProfileManager.isAllowedToUseMoveBeltForward(houseKeeper));
+        assertFalse(ProfileManager.isAllowedToUseBaggageScanner(houseKeeper));
+        assertFalse(ProfileManager.isAllowedToUseAlarm(houseKeeper));
+        assertFalse(ProfileManager.isAllowedToUseReport(houseKeeper));
+        assertFalse(ProfileManager.isAllowedToUseMaintenance(houseKeeper));
+
+        assertFalse(ProfileManager.isAllowedToUseMoveBeltBackward(technician));
+        assertFalse(ProfileManager.isAllowedToUseMoveBeltForward(technician));
+        assertTrue(ProfileManager.isAllowedToUseBaggageScanner(technician));
+        assertFalse(ProfileManager.isAllowedToUseAlarm(technician));
+        assertFalse(ProfileManager.isAllowedToUseReport(technician));
+        assertTrue(ProfileManager.isAllowedToUseMaintenance(technician));
     }
 
-    @Test
     @Order(6)
+    @Test
     public void unlockBaggageScanner(){
         initOfficeAndBaggageScanner();
         baggageScanner.setStatus(BaggageScannerStatus.locked);
@@ -207,46 +227,46 @@ public class AirportTest {
         assertTrue(ProfileManager.isAllowedToUnlock(supervisorS));
     }
 
-    @Test
     @Order(7)
+    @Test
     public void findKnife(){
         initOfficeAndBaggageScanner();
 
         Passenger passenger = new Passenger("Klaus Mayer Max Mustermann",1,"K,1,3");
         baggageScanner.scan(passenger.getHandBaggages()[0]);
-        assertTrue(baggageScanner.getRecord().get(0).getResult().contains("knife"));
+        assertTrue(baggageScanner.getRecords().get(0).getResult().contains("knife"));
     }
 
-    @Test
     @Order(8)
+    @Test
     public void findGun(){
         initOfficeAndBaggageScanner();
 
         Passenger passenger = new Passenger("Klaus Mayer Max Mustermann",1,"W,1,3");
         baggageScanner.scan(passenger.getHandBaggages()[0]);
-        assertTrue(baggageScanner.getRecord().get(0).getResult().contains("glock"));
+        assertTrue(baggageScanner.getRecords().get(0).getResult().contains("glock"));
     }
 
-    @Test
     @Order(9)
+    @Test
     public void findExlosive(){
         initOfficeAndBaggageScanner();
 
         Passenger passenger = new Passenger("Klaus Mayer Max Mustermann",1,"E,1,3");
         baggageScanner.scan(passenger.getHandBaggages()[0]);
-        assertTrue(baggageScanner.getRecord().get(0).getResult().contains("explosive"));
+        assertTrue(baggageScanner.getRecords().get(0).getResult().contains("explosive"));
     }
 
-    @Test
     @Order(10)
-    public void logScans(){
+    @TestFactory
+    Stream<DynamicTest> logScans(){
             initOfficeAndBaggageScanner();
 
-            Passenger passenger1 = new Passenger("Mustaf Ali Baba",2,"");
+            Passenger passenger1 = new Passenger("Mustaf Ali Baba",2,"-");
             Passenger passenger2 = new Passenger("Meister Propper",1,"E,1,3");
-            Passenger passenger3 = new Passenger("Jensy Boy",3,"");
-            Passenger passenger4 = new Passenger("Not nothacker",1,"");
-            Passenger passenger5 = new Passenger("Krisch",3,"");
+            Passenger passenger3 = new Passenger("Jensy Boy",3,"-");
+            Passenger passenger4 = new Passenger("Not nothacker",1,"-");
+            Passenger passenger5 = new Passenger("Krisch",3,"-");
 
             baggageScanner.scan(passenger1.getHandBaggages()[0]);
             baggageScanner.scan(passenger1.getHandBaggages()[1]);
@@ -264,29 +284,48 @@ public class AirportTest {
                     +passenger3.getHandBaggages().length
                     +passenger4.getHandBaggages().length
                     +passenger5.getHandBaggages().length
-                    ,baggageScanner.getRecord().size());
+                    ,baggageScanner.getRecords().size());
+
+        return DataSet.parsePassengerBaggageFile("passenger_baggage.txt")
+                .map(dataSet -> dynamicTest(getDisplayName(dataSet), () -> {
+                    var passenger = new Passenger(dataSet.getPassengerName(), dataSet.getHandBaggageAmount(), dataSet.getHandBaggageContent());
+                    for (HandBaggage handBaggage : passenger.getHandBaggages()) {
+                        if(dataSet.getHandBaggageContent().contains("-")){
+                            assertTrue(baggageScanner.getRecords().get(0).getResult().contains("clean"));
+                        }
+                        else if(dataSet.getHandBaggageContent().contains("K")){
+
+                        }
+                        else if(dataSet.getHandBaggageContent().contains("W")){
+
+                        }
+                        else if(dataSet.getHandBaggageContent().contains("E")){
+
+                        }
+                    }
+                }));
     }
 
-    @Test
     @Order(11)
+    @Test
     public void noIllegalItems(){
 
     }
 
-    @Test
     @Order(12)
+    @Test
     public void knifeFound(){
 
     }
 
-    @Test
     @Order(13)
+    @Test
     public void gunFound(){
 
     }
 
-    @Test
     @Order(14)
+    @Test
     public void explosiveFound(){
 
     }

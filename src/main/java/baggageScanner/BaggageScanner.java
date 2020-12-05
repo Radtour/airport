@@ -101,7 +101,7 @@ public class BaggageScanner {
         return manualPostControl;
     }
 
-    public List<Record> getRecord() {
+    public List<Record> getRecords() {
         return record;
     }
 
@@ -116,7 +116,7 @@ public class BaggageScanner {
                         && handBaggage.getLayers()[i].getContent()[j+4] == 'e'){
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss,SSS");
                     LocalDateTime now = LocalDateTime.now();
-                    record.add(new Record(dtf.format(now),"prohibited item | knife detected at position" + i + "," + j));
+                    record.add(new Record(dtf.format(now),"prohibited item | knife detected at position" + i));
                     clean = false;
                 }
             }
@@ -130,7 +130,7 @@ public class BaggageScanner {
                         && handBaggage.getLayers()[i].getContent()[j+6] == '7'){
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss,SSS");
                     LocalDateTime now = LocalDateTime.now();
-                    record.add(new Record(dtf.format(now),"prohibited item | weapon-glock7 detected at position" + i + "," + j));
+                    record.add(new Record(dtf.format(now),"prohibited item | weapon-glock7 detected at position" + i));
                     clean = false;
                 }
             }
@@ -146,7 +146,7 @@ public class BaggageScanner {
                         && handBaggage.getLayers()[i].getContent()[j+8] == 'e'){
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss,SSS");
                     LocalDateTime now = LocalDateTime.now();
-                    record.add(new Record(dtf.format(now),"prohibited item | explosive detected at position" + i + "," + j));
+                    record.add(new Record(dtf.format(now),"prohibited item | explosive detected at position" + i));
                     clean = false;
                 }
             }
@@ -158,25 +158,52 @@ public class BaggageScanner {
         }
     }
 
-    public void moveBeltForward() {
-        //TODO: do something
-    }
-    public void moveBeltBackwards() {
-        //TODO: do something
+    public boolean moveBeltForward(Employee employee) {
+        if(ProfileManager.isAllowedToUseMoveBeltForward(employee) && ProfileManager.isAllowedToUseBaggageScanner(employee)){
+
+
+            return true;
+        }
+        return false;
     }
 
-    public void alarm() {
-        //TODO: do something
+    public boolean moveBeltBackwards(Employee employee) {
+        if(ProfileManager.isAllowedToUseMoveBeltBackward(employee) && ProfileManager.isAllowedToUseBaggageScanner(employee)){
+
+
+            return true;
+        }
+        return false;
     }
-    public void report() {
-        //TODO: do something
+
+    public boolean alarm(Employee employee) {
+        if(ProfileManager.isAllowedToUseAlarm(employee) && ProfileManager.isAllowedToUseBaggageScanner(employee)){
+
+
+            return true;
+        }
+        return false;
     }
-    public void maintenance() {
-        //TODO: do something
+    public boolean report(Employee employee) {
+        if (ProfileManager.isAllowedToUseReport(employee) && ProfileManager.isAllowedToUseBaggageScanner(employee)) {
+
+
+            return true;
+        }
+        return false;
+    }
+
+    public boolean maintenance(Employee employee) {
+        if(ProfileManager.isAllowedToUseMaintenance(employee) && ProfileManager.isAllowedToUseBaggageScanner(employee)){
+
+
+            return true;
+        }
+        return false;
     }
 
     public boolean unlock(Employee employee){
-        if(ProfileManager.isAllowedToUnlock(employee)){
+        if(ProfileManager.isAllowedToUnlock(employee) && ProfileManager.isAllowedToUseBaggageScanner(employee)){
             status = BaggageScannerStatus.activated;
             return true;
         }
@@ -184,7 +211,7 @@ public class BaggageScanner {
     }
 
     public boolean activate(Employee employee) {
-        if(ProfileManager.isAllowedToActivate(employee)){
+        if(ProfileManager.isAllowedToActivate(employee) && ProfileManager.isAllowedToUseBaggageScanner(employee)){
             status = BaggageScannerStatus.activated;
             return true;
         }
@@ -192,7 +219,7 @@ public class BaggageScanner {
     }
 
     public boolean start(Employee employee) {
-        if(ProfileManager.isAllowedToStart(employee)){
+        if(ProfileManager.isAllowedToStart(employee) && ProfileManager.isAllowedToUseBaggageScanner(employee)){
             status = BaggageScannerStatus.deactivated;
             return true;
         }
