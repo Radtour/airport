@@ -36,6 +36,11 @@ public class Inspector extends Employee {
         TestStripe testStripe = new TestStripe();
 
         testStripe.setEXP();
+        insertIntoDetector(testStripe);
+    }
+
+    public void insertIntoDetector(TestStripe testStripe){
+
     }
 
     public Boolean getSenior() {

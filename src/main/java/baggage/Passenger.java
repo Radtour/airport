@@ -9,6 +9,7 @@ public class Passenger {
     private final String name;
     private HandBaggage[] handBaggages;
     private boolean isArrested;
+    private boolean isInPersonControll;
 
     public Passenger(String name,int handBaggageAmount, String baggageInfoString){
 
@@ -73,5 +74,17 @@ public class Passenger {
 
     public boolean isArrested() {
         return isArrested;
+    }
+
+    public void lookAtWeapon(){
+        //stare intensive at weapon
+    }
+
+    public void enterPersonControl(){
+        isInPersonControll = true;
+    }
+
+    public void leavePersonControl(){
+        isInPersonControll = false;
     }
 }

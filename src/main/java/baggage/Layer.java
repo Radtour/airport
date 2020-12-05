@@ -23,4 +23,13 @@ public class Layer {
         return content;
     }
 
+    public void clearLayer()
+    {
+        Random r = new Random();
+
+        for(int i = 0; i < 10000; i++){
+            char c = (char)(r.nextInt(26) + 'a');
+            content[i] = c;
+        }
+    }
 }

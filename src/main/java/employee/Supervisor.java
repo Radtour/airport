@@ -36,4 +36,8 @@ public class Supervisor extends Employee {
     public void setSupervision(Supervision supervision) {
         this.supervision = supervision;
     }
+
+    public void lookAtWeapon(){
+
+    }
 }

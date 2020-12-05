@@ -34,15 +34,15 @@ public class BaggageScanner {
     private HouseKeeper houseKeeper;
     private Tray currentTrayInScanner;
 
-    public BaggageScanner(Supervisor supervisorS0, Inspector inspectorI1, Inspector inspectorI2, Inspector inspectorI3, Technician technician, FederalPoliceOfficer federalPoliceOfficer, HouseKeeper houseKeeper){
+    public BaggageScanner(Supervisor supervisorS0, Inspector inspectorI1, Inspector inspectorI2, Inspector inspectorI3, Technician technician, FederalPoliceOfficer federalPoliceOfficerO1, HouseKeeper houseKeeper){
         this.technician = technician;
         this.houseKeeper = houseKeeper;
-        this.officer = federalPoliceOfficer;
+        this.officer = federalPoliceOfficerO1;
         inspectorI1.setBaggageScanner(this);
         inspectorI2.setBaggageScanner(this);
         inspectorI3.setBaggageScanner(this);
         technician.setBaggageScanner(this);
-        federalPoliceOfficer.setBaggageScanner(this);
+        federalPoliceOfficerO1.setBaggageScanner(this);
         supervisorS0.setBaggageScanner(this);
         houseKeeper.setBaggageScanner(this);
 
