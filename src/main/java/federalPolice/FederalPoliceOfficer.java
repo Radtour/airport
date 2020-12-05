@@ -48,23 +48,24 @@ public class FederalPoliceOfficer extends Employee {
     public void showWeapon(){
         getBaggageScanner().getSupervision().getSupervisor().lookAtWeapon();
         getBaggageScanner().getManualPostControl().getCurrentPassenger().lookAtWeapon();
-
+        giveWeaponToPoliceOfficer();
     }
 
     public void giveWeaponToPoliceOfficer(){
-        office.getOfficers()[1].takeWeapon();
+        office.getOfficers()[1].takeWeapon(this.getBaggageScanner());
     }
 
-    public void takeWeapon(){
-        if(getBaggageScanner().getManualPostControl().getCurrentPassenger().getHandBaggages().length > 1)
+    public void takeWeapon(BaggageScanner baggageScanner){
+        //TODO Arthur mach den shit mit dem restlichen scannen
+        if(baggageScanner.getManualPostControl().getCurrentPassenger().getHandBaggages().length > 1)
         {
-
+            baggageScanner.getManualPostControl().getInspector().scanRemainingBaggage();
         }
         else {
             this.leavePersonControll();
             office.getOfficers()[0].leavePersonControll();
-            getBaggageScanner().getManualPostControl().getCurrentPassenger().leavePersonControl();
-            getBaggageScanner().getSupervision().getSupervisor().unlockBaggageScanner();
+            baggageScanner.getManualPostControl().getCurrentPassenger().leavePersonControl();
+            baggageScanner.getSupervision().getSupervisor().unlockBaggageScanner();
         }
     }
 
