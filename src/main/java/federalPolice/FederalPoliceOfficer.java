@@ -72,4 +72,8 @@ public class FederalPoliceOfficer extends Employee {
     public void leavePersonControll(){
 
     }
+
+    public char[][] controlRobocop(Remote remote,HandBaggage handBaggage){
+        return remote.use(handBaggage);
+    }
 }

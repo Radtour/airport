@@ -75,7 +75,7 @@ public class Application {
         idCardT.writeMagnetStripe(technician);
 
         BaggageScanner baggageScanner = new BaggageScanner(supervisorS,inspectorI1,inspectorI2,inspectorI3,technician,officerO1,houseKeeper);
-        FederalPoliceOffice federalPoliceOffice = new FederalPoliceOffice(officerO2, officerO3);
+        FederalPoliceOffice federalPoliceOffice = new FederalPoliceOffice(officerO1,officerO2, officerO3);
 
         supervisorS.pushStartButton();
         if(baggageScanner.getStatus() == BaggageScannerStatus.deactivated){

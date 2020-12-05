@@ -2,6 +2,7 @@ package employee;
 
 import baggage.HandBaggage;
 import baggageScanner.BaggageScannerStatus;
+import baggageScanner.ExplosiveTraceDetector;
 import baggageScanner.TestStripe;
 import baggageScanner.conveyingComponents.Tray;
 import baggageScanner.operatingStation.Scanner;
@@ -32,15 +33,16 @@ public class Inspector extends Employee {
 
     }
 
-    public void swipe(HandBaggage handBaggage){
+    public boolean swipe(){
         TestStripe testStripe = new TestStripe();
 
         testStripe.setEXP();
-        insertIntoDetector(testStripe);
+        return insertIntoDetector(testStripe);
     }
 
-    public void insertIntoDetector(TestStripe testStripe){
-
+    public boolean insertIntoDetector(TestStripe testStripe){
+        ExplosiveTraceDetector explosiveTraceDetector = new ExplosiveTraceDetector();
+        return explosiveTraceDetector.insert(testStripe);
     }
 
     public Boolean getSenior() {

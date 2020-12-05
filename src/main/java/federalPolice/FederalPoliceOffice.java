@@ -25,15 +25,24 @@ public class FederalPoliceOffice {
     }
 
     public char[][] randomRobocopDestroyHandBaggage(HandBaggage handBaggage){
-        Random random = new Random();
-        int robot = random.nextInt(3);
-
-        return robocop[robot].getRemote().use(handBaggage);
+        boolean robotsend = false;
+        for (int i = 0; i < 3; i++){
+            if(robocop[i].isAtAirport()){
+                return robocop[i].getRemote().use(handBaggage);
+                robotsend = true;
+            }
+        }
+        if (!robotsend){
+            return null;
+        }
     }
 
-    public void sendRandomRobocom(){
+    public boolean sendRandomRobocop(){
         Random random = new Random();
         int robot = random.nextInt(3);
+
+        robocop[robot].setAtAirport(true);
+        return officers[2].getBaggageScanner().getManualPostControl().getInspector().swipe();
     }
 
     public FederalPoliceOfficer[] getOfficers() {
@@ -48,8 +57,10 @@ public class FederalPoliceOffice {
         if(baggageScanner.getRecords().get(baggageScanner.getRecords().size()-1).getResult().contains("Glock")){
             officers[2].openBaggage(baggageScanner.getCurrentTrayInScanner().getHandBaggage());
         }
-        if(baggageScanner.getRecords().get(baggageScanner.getRecords().size()-1).getResult().contains("Glock")){
-
+        if(baggageScanner.getRecords().get(baggageScanner.getRecords().size()-1).getResult().contains("Explosive")){
+            if(sendRandomRobocop()){
+                officers[0].
+            }
         }
     }
 }
