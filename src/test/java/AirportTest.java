@@ -28,6 +28,7 @@ public class AirportTest {
     @BeforeEach
     public void cleanup(){
         HandBaggage.setHandBaggageHashSet(new HashSet<>());
+        DataSet.setPassengerNumberIncrement(1);
     }
 
     BaggageScanner baggageScanner;
@@ -242,9 +243,13 @@ public class AirportTest {
     public void findGun(){
         initOfficeAndBaggageScanner();
 
-        Passenger passenger = new Passenger("Klaus Mayer Max Mustermann",1,"W,1,3");
+        Passenger passenger = new Passenger("Klaus Mayer Max Mustermann",3,"W,2,5");
         baggageScanner.scan(passenger.getHandBaggages()[0]);
-        assertTrue(baggageScanner.getRecords().get(0).getResult().contains("glock"));
+        assertTrue(baggageScanner.getRecords().get(0).getResult().contains("clean"));
+        baggageScanner.scan(passenger.getHandBaggages()[1]);
+        assertTrue(baggageScanner.getRecords().get(1).getResult().contains("glock"));
+        baggageScanner.scan(passenger.getHandBaggages()[2]);
+        assertTrue(baggageScanner.getRecords().get(2).getResult().contains("clean"));
     }
 
     @Order(9)
@@ -262,7 +267,7 @@ public class AirportTest {
     Stream<DynamicTest> logScans(){
             initOfficeAndBaggageScanner();
 
-            Passenger passenger1 = new Passenger("Mustaf Ali Baba",2,"-");
+            /*Passenger passenger1 = new Passenger("Mustaf Ali Baba",2,"-");
             Passenger passenger2 = new Passenger("Meister Propper",1,"E,1,3");
             Passenger passenger3 = new Passenger("Jensy Boy",3,"-");
             Passenger passenger4 = new Passenger("Not nothacker",1,"-");
@@ -284,26 +289,45 @@ public class AirportTest {
                     +passenger3.getHandBaggages().length
                     +passenger4.getHandBaggages().length
                     +passenger5.getHandBaggages().length
-                    ,baggageScanner.getRecords().size());
+                    ,baggageScanner.getRecords().size());*/
 
         return DataSet.parsePassengerBaggageFile("passenger_baggage.txt")
-                .map(dataSet -> dynamicTest(getDisplayName(dataSet), () -> {
+                .map(dataSet -> dynamicTest(getDisplayNameLogScans(dataSet), () -> {
                     var passenger = new Passenger(dataSet.getPassengerName(), dataSet.getHandBaggageAmount(), dataSet.getHandBaggageContent());
-                    for (HandBaggage handBaggage : passenger.getHandBaggages()) {
+
+                    List<String[]> baggageInfoList = new ArrayList<>();
+                    var baggageInfo = dataSet.getHandBaggageContent().split(";");
+
+                    for (int i = 0; i < baggageInfo.length; i++){
+                        baggageInfoList.add(baggageInfo[i].split(","));
+                    }
+
+                    for (int i = 0; i < dataSet.getHandBaggageAmount(); i++) {
+                        baggageScanner.scan(passenger.getHandBaggages()[i]);
                         if(dataSet.getHandBaggageContent().contains("-")){
-                            assertTrue(baggageScanner.getRecords().get(0).getResult().contains("clean"));
+                            assertTrue(baggageScanner.getRecords().get(baggageScanner.getRecords().size() - 1).getResult().contains("clean"));
                         }
-                        else if(dataSet.getHandBaggageContent().contains("K")){
+                        for(String[] baggageInfoUnique : baggageInfoList){
+                            if(baggageInfoUnique[0].equals("K") && Integer.parseInt(baggageInfoUnique[1]) == (i - 1)){
+                                assertTrue(baggageScanner.getRecords().get(baggageScanner.getRecords().size() - 1).getResult().contains("knife"));
+                                assertTrue(baggageScanner.getRecords().get(baggageScanner.getRecords().size() - 1).getResult().contains(baggageInfoUnique[2]));
+                            }
+                            if(baggageInfoUnique[0].equals("W") && Integer.parseInt(baggageInfoUnique[1]) == (i - 1)){
+                                assertTrue(baggageScanner.getRecords().get(baggageScanner.getRecords().size() - 1).getResult().contains("weapon"));
+                                assertTrue(baggageScanner.getRecords().get(baggageScanner.getRecords().size() - 1).getResult().contains(baggageInfoUnique[2]));
 
-                        }
-                        else if(dataSet.getHandBaggageContent().contains("W")){
-
-                        }
-                        else if(dataSet.getHandBaggageContent().contains("E")){
-
+                            }
+                            if(baggageInfoUnique[0].equals("E") && Integer.parseInt(baggageInfoUnique[1]) == (i - 1)){
+                                assertTrue(baggageScanner.getRecords().get(baggageScanner.getRecords().size() - 1).getResult().contains("explosive"));
+                                assertTrue(baggageScanner.getRecords().get(baggageScanner.getRecords().size() - 1).getResult().contains(baggageInfoUnique[2]));
+                            }
                         }
                     }
                 }));
+    }
+
+    private String getDisplayNameLogScans(DataSet dataSet) {
+        return dataSet.getPassengerNumber() + " " + dataSet.getPassengerName() + " " + dataSet.getHandBaggageAmount() + " " + dataSet.getHandBaggageContent();
     }
 
     @Order(11)

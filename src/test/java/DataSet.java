@@ -34,6 +34,9 @@ public class DataSet {
         String passengerName = dataSetSplit[0];
         int handBaggageAmount = Integer.parseInt(dataSetSplit[1]);
         String handBaggageContent = dataSetSplit[2].replace("[", "").replace("]", "");
+        if(dataSetSplit.length > 3){
+            handBaggageContent += ";" + dataSetSplit[3].replace("]", "");
+        }
 
 
         DataSet dataSet = new DataSet(passengerName,handBaggageAmount, handBaggageContent, passengerNumberIncrement);
@@ -55,5 +58,9 @@ public class DataSet {
 
     public int getPassengerNumber() {
         return passengerNumber;
+    }
+
+    public static void setPassengerNumberIncrement(int passengerNumberIncrement) {
+        DataSet.passengerNumberIncrement = passengerNumberIncrement;
     }
 }

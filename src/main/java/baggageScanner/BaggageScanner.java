@@ -130,7 +130,7 @@ public class BaggageScanner {
                         && handBaggage.getLayers()[i].getContent()[j+6] == '7'){
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss,SSS");
                     LocalDateTime now = LocalDateTime.now();
-                    record.add(new Record(dtf.format(now),"prohibited item | weapon-glock7 detected at position" + i));
+                    record.add(new Record(dtf.format(now),"prohibited item | weapon - glock7 detected at position" + i));
                     clean = false;
                 }
             }
