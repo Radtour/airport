@@ -59,7 +59,15 @@ public class FederalPoliceOffice {
         }
         if(baggageScanner.getRecords().get(baggageScanner.getRecords().size()-1).getResult().contains("Explosive")){
             if(sendRandomRobocop()){
-                officers[0].
+                int i;
+                for (i = 0; i < 3 ; i++){
+                    if (robocop[i].isAtAirport()){
+                        break;
+                    }
+                }
+                //TODO bitte handbaggage uebergeben
+                char [][] destroyedHandbaggage = officers[0].controlRobocop(robocop[i].getRemote());
+
             }
         }
     }
