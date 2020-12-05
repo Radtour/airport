@@ -1,6 +1,8 @@
+import baggage.HandBaggage;
 import baggage.Passenger;
 import baggageScanner.BaggageScanner;
 import baggageScanner.BaggageScannerStatus;
+import baggageScanner.conveyingComponents.Tray;
 import configuration.Configuration;
 import employee.HouseKeeper;
 import employee.Inspector;
@@ -21,12 +23,11 @@ public class Application {
     public static void main(String [] args) throws Exception {
         Queue<Passenger> passengers = new LinkedList<>();
         try {
-            FileReader fileReader = new FileReader("data/passenger_baggage.txt");
+            FileReader fileReader = new FileReader("passenger_baggage.txt");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             String give;
 
-            //TODO zeile für zeile einlesen bis datei leer ist
             for(int i=0; i<568; i++){
                 String line = bufferedReader.readLine();
                 String[] split = line.split(";");
@@ -78,7 +79,22 @@ public class Application {
 
         supervisorS.pushStartButton();
         if(baggageScanner.getStatus() == BaggageScannerStatus.deactivated){
-            inspectorI2.swipeCard();
+            boolean validated = inspectorI2.swipeCard();
+            if(validated){
+                baggageScanner.getManualPostControl().setCurrentPassenger(passengers.poll());
+                var handBaggages = baggageScanner.getManualPostControl().getCurrentPassenger().getHandBaggages();
+                for(HandBaggage handBaggage : handBaggages){
+                    Tray tray = new Tray();
+                    tray.setHandBaggage(handBaggage);
+                    baggageScanner.getRollerConveyor().addTrayQueue(tray);
+                }
+
+                for(Tray tray : baggageScanner.getRollerConveyor().getTrays()){
+                    inspectorI2.push(tray);
+                    baggageScanner.getOperatingStation().pushRightButton();
+                    baggageScanner.getOperatingStation().pushRectagleButton();
+                }
+            }
         }
         else{
             throw new Exception("Terminate Application in Application");

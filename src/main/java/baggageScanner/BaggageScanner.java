@@ -1,9 +1,11 @@
 package baggageScanner;
 
 import baggage.HandBaggage;
+import baggage.Passenger;
 import baggageScanner.conveyingComponents.Belt;
 import baggageScanner.conveyingComponents.RollerConveyor;
 import baggageScanner.conveyingComponents.Track;
+import baggageScanner.conveyingComponents.Tray;
 import baggageScanner.operatingStation.OperatingStation;
 import configuration.Configuration;
 import employee.*;
@@ -30,6 +32,7 @@ public class BaggageScanner {
     private List<Record> record;
     private Technician technician;
     private HouseKeeper houseKeeper;
+    private Tray currentTrayInScanner;
 
     public BaggageScanner(Supervisor supervisorS0, Inspector inspectorI1, Inspector inspectorI2, Inspector inspectorI3, Technician technician, FederalPoliceOfficer federalPoliceOfficer, HouseKeeper houseKeeper){
         this.technician = technician;
@@ -228,5 +231,36 @@ public class BaggageScanner {
 
     public void setStatus(BaggageScannerStatus status) {
         this.status = status;
+    }
+
+    public Tray getCurrentTrayInScanner() {
+        return currentTrayInScanner;
+    }
+
+    public void setCurrentTrayInScanner(Tray currentTrayInScanner) {
+        this.currentTrayInScanner = currentTrayInScanner;
+    }
+
+    public void simulation(Passenger passenger){
+        getSupervision().getSupervisor().pushStartButton();
+        if(getStatus() == BaggageScannerStatus.deactivated){
+            boolean validated = getOperatingStation().getInspector().swipeCard();
+            if(validated){
+                getManualPostControl().setCurrentPassenger(passenger);
+                var handBaggages = getManualPostControl().getCurrentPassenger().getHandBaggages();
+                for(HandBaggage handBaggage : handBaggages){
+                    Tray tray = new Tray();
+                    tray.setHandBaggage(handBaggage);
+                    getRollerConveyor().addTrayQueue(tray);
+                }
+
+                for(Tray tray : getRollerConveyor().getTrays()){
+                    getOperatingStation().getInspector().push(tray);
+                    getOperatingStation().pushRightButton();
+                    getOperatingStation().pushRectagleButton();
+                    Record record = getRecords().get(getRecords().size());
+                }
+            }
+        }
     }
 }

@@ -2,6 +2,8 @@ import baggage.HandBaggage;
 import baggage.Passenger;
 import baggageScanner.BaggageScanner;
 import baggageScanner.BaggageScannerStatus;
+import baggageScanner.Record;
+import baggageScanner.conveyingComponents.Tray;
 import baggageScanner.operatingStation.Scanner;
 import configuration.Configuration;
 import employee.HouseKeeper;
@@ -333,13 +335,24 @@ public class AirportTest {
     @Order(11)
     @Test
     public void noIllegalItems(){
+        initOfficeAndBaggageScanner();
 
+        Passenger passenger = new Passenger("Klaus Mayer Max Mustermann",3,"-");
+
+        for(Record record: baggageScanner.getRecords()){
+            assertTrue(record.getResult().contains("clean"));
+        }
     }
 
     @Order(12)
     @Test
     public void knifeFound(){
+        initOfficeAndBaggageScanner();
 
+        Passenger passenger = new Passenger("Klaus Mayer Max Mustermann",1,"K,1,1");
+
+        var records = baggageScanner.getRecords();
+        assertTrue(records.get(0).getResult().contains("knife"));
     }
 
     @Order(13)

@@ -2,12 +2,25 @@ package baggageScanner.conveyingComponents;
 
 import baggageScanner.BaggageScanner;
 
-public class Belt {
+import java.util.LinkedList;
+import java.util.Queue;
 
+public class Belt {
     private final BaggageScanner baggageScanner;
+
+    private Queue<Tray> trays;
 
     public Belt(BaggageScanner baggageScanner){
         this.baggageScanner = baggageScanner;
+        this.trays = new LinkedList<>();
+    }
+
+    public Queue<Tray> getTrays() {
+        return trays;
+    }
+
+    public void addTrayQueue(Tray tray){
+        this.trays.add(tray);
     }
 
 }

@@ -25,4 +25,8 @@ public class ManualPostControl {
     public Passenger getCurrentPassenger() {
         return currentPassenger;
     }
+
+    public void setCurrentPassenger(Passenger currentPassenger) {
+        this.currentPassenger = currentPassenger;
+    }
 }

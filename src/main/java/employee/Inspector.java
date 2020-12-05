@@ -21,7 +21,7 @@ public class Inspector extends Employee {
     }
 
     public void push(Tray tray){
-
+        getBaggageScanner().getBelt().addTrayQueue(tray);
     }
 
     public void disposeKnife(){
