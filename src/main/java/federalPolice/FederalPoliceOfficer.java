@@ -44,7 +44,6 @@ public class FederalPoliceOfficer extends Employee {
 
     public void showWeapon(){
         getBaggageScanner().getSupervision().getSupervisor().lookAtWeapon();
-        getBaggageScanner().getManualPostControl().getCurrentPassenger().lookAtWeapon();
         giveWeaponToPoliceOfficer();
     }
 

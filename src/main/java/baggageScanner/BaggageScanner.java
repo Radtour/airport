@@ -1,12 +1,14 @@
 package baggageScanner;
 
 import baggage.HandBaggage;
+import baggage.Layer;
 import baggage.Passenger;
 import baggageScanner.conveyingComponents.Belt;
 import baggageScanner.conveyingComponents.RollerConveyor;
 import baggageScanner.conveyingComponents.Track;
 import baggageScanner.conveyingComponents.Tray;
 import baggageScanner.operatingStation.OperatingStation;
+import configuration.AlgorithmType;
 import configuration.Configuration;
 import employee.*;
 import employee.id.ProfileManager;
@@ -110,50 +112,56 @@ public class BaggageScanner {
 
     public void scan(HandBaggage handBaggage){
         boolean clean = true;
-        for(int i = 0; i < 5; i++){
-            for (int j = 0; j < 9996; j++){
-                if(handBaggage.getLayers()[i].getContent()[j] == 'k'
-                        && handBaggage.getLayers()[i].getContent()[j+1] == 'n'
-                        && handBaggage.getLayers()[i].getContent()[j+2] == '!'
-                        && handBaggage.getLayers()[i].getContent()[j+3] == 'f'
-                        && handBaggage.getLayers()[i].getContent()[j+4] == 'e'){
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss,SSS");
-                    LocalDateTime now = LocalDateTime.now();
-                    record.add(new Record(dtf.format(now),"prohibited item | knife detected at position" + i));
-                    clean = false;
+
+        for(int j = 0; j < handBaggage.getLayers().length; j++){
+            Layer layer = handBaggage.getLayers()[j];
+            StringBuilder layerSequentialBuilder = new StringBuilder();
+            for(int i = 0; i < layer.getContent().length; i++){
+                layerSequentialBuilder.append(layer.getContent()[i]);
+            }
+            String layerSequential = layerSequentialBuilder.toString();
+            if(Configuration.instance.algorithm == AlgorithmType.BoyerMoore){
+                if(Configuration.instance.boyerMoore.search(layerSequential, Configuration.instance.knife) != -1){
+                    if(createKnifeRecord(j)) {
+                        clean = false;
+                        break;
+                    }
+                }
+                else if(Configuration.instance.boyerMoore.search(layerSequential, Configuration.instance.weapon)  != -1){
+                    if(createWeaponRecord(j)) {
+                        clean = false;
+                        break;
+                    }
+                }
+                else if(Configuration.instance.boyerMoore.search(layerSequential, Configuration.instance.explosive)  != -1){
+                    if(createExplosiveRecord(j)) {
+                        clean = false;
+                        break;
+                    }
                 }
             }
-            for (int j = 0; j < 9994; j++){
-                if(handBaggage.getLayers()[i].getContent()[j] == 'g'
-                        && handBaggage.getLayers()[i].getContent()[j+1] == 'l'
-                        && handBaggage.getLayers()[i].getContent()[j+2] == 'o'
-                        && handBaggage.getLayers()[i].getContent()[j+3] == 'c'
-                        && handBaggage.getLayers()[i].getContent()[j+4] == 'k'
-                        && handBaggage.getLayers()[i].getContent()[j+5] == '|'
-                        && handBaggage.getLayers()[i].getContent()[j+6] == '7'){
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss,SSS");
-                    LocalDateTime now = LocalDateTime.now();
-                    record.add(new Record(dtf.format(now),"prohibited item | weapon - glock7 detected at position" + i));
-                    clean = false;
+            else if(Configuration.instance.algorithm == AlgorithmType.KnuthMorrisPratt){
+                if(Configuration.instance.knuthMorrisPratt.search(layerSequential, Configuration.instance.knife)  != -1){
+                    if(createKnifeRecord(j)) {
+                        clean = false;
+                        break;
+                    }
                 }
-            }
-            for (int j = 0; j < 9992; j++){
-                if(handBaggage.getLayers()[i].getContent()[j] == 'e'
-                        && handBaggage.getLayers()[i].getContent()[j+1] == 'x'
-                        && handBaggage.getLayers()[i].getContent()[j+2] == 'p'
-                        && handBaggage.getLayers()[i].getContent()[j+3] == '|'
-                        && handBaggage.getLayers()[i].getContent()[j+4] == 'o'
-                        && handBaggage.getLayers()[i].getContent()[j+5] == 's'
-                        && handBaggage.getLayers()[i].getContent()[j+6] == '!'
-                        && handBaggage.getLayers()[i].getContent()[j+7] == 'v'
-                        && handBaggage.getLayers()[i].getContent()[j+8] == 'e'){
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss,SSS");
-                    LocalDateTime now = LocalDateTime.now();
-                    record.add(new Record(dtf.format(now),"prohibited item | explosive detected at position" + i));
-                    clean = false;
+                else if(Configuration.instance.knuthMorrisPratt.search(layerSequential, Configuration.instance.weapon)  != -1){
+                    if(createWeaponRecord(j)) {
+                        clean = false;
+                        break;
+                    }
+                }
+                else if(Configuration.instance.knuthMorrisPratt.search(layerSequential, Configuration.instance.explosive)  != -1){
+                    if(createExplosiveRecord(j)) {
+                        clean = false;
+                        break;
+                    }
                 }
             }
         }
+
         if(clean){
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss,SSS");
             LocalDateTime now = LocalDateTime.now();
@@ -161,10 +169,27 @@ public class BaggageScanner {
         }
     }
 
+    private boolean createKnifeRecord(int position){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss,SSS");
+        LocalDateTime now = LocalDateTime.now();
+        return record.add(new Record(dtf.format(now),"prohibited item | knife detected at position " + position));
+    }
+
+    private boolean createWeaponRecord(int position){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss,SSS");
+        LocalDateTime now = LocalDateTime.now();
+        return record.add(new Record(dtf.format(now),"prohibited item | weapon - glock7 detected at position " + position));
+    }
+
+    private boolean createExplosiveRecord(int position){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss,SSS");
+        LocalDateTime now = LocalDateTime.now();
+        return record.add(new Record(dtf.format(now),"prohibited item | explosive detected at position " + position));
+    }
+
     public boolean moveBeltForward(Employee employee) {
         if(ProfileManager.isAllowedToUseMoveBeltForward(employee) && ProfileManager.isAllowedToUseBaggageScanner(employee)){
-
-
+            employee.getBaggageScanner().setCurrentTrayInScanner(employee.getBaggageScanner().getBelt().getTrays().poll());
             return true;
         }
         return false;
