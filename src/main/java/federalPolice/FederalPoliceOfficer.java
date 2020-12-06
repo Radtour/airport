@@ -43,7 +43,6 @@ public class FederalPoliceOfficer extends Employee {
     }
 
     public void showWeapon(){
-        getBaggageScanner().getSupervision().getSupervisor().lookAtWeapon();
         giveWeaponToPoliceOfficer();
     }
 
@@ -52,7 +51,6 @@ public class FederalPoliceOfficer extends Employee {
     }
 
     public void takeWeapon(BaggageScanner baggageScanner){
-        //TODO Arthur mach den shit mit dem restlichen scannen
         if(baggageScanner.getManualPostControl().getCurrentPassenger().getHandBaggages().length > 1)
         {
             baggageScanner.getManualPostControl().getInspector().scanRemainingBaggage();
