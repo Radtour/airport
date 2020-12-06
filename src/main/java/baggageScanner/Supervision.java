@@ -5,8 +5,8 @@ import baggageScanner.buttons.StartButton;
 import employee.Supervisor;
 
 public class Supervision {
-    private Supervisor supervisor;
-    private BaggageScanner baggageScanner;
+    private final Supervisor supervisor;
+    private final BaggageScanner baggageScanner;
     private final StartButton startButton;
     private final ShutdownButton shutdownButton;
 

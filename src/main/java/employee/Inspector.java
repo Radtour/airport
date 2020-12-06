@@ -1,7 +1,6 @@
 package employee;
 
 import baggage.HandBaggage;
-import baggageScanner.BaggageScannerStatus;
 import baggageScanner.Record;
 import baggageScanner.ExplosiveTraceDetector;
 import baggageScanner.TestStripe;
@@ -12,7 +11,6 @@ import employee.id.IDCard;
 import employee.id.ProfileType;
 
 import java.util.Date;
-import java.util.Objects;
 
 public class Inspector extends Employee {
     private final Boolean isSenior;
@@ -61,10 +59,7 @@ public class Inspector extends Employee {
             if(!scanner.isIDCardLocked(this.getIdCard())){
                 boolean pinValidated = scanner.inputPIN(magnetStripeContentArray[2]);
                 if(pinValidated){
-                    boolean activationSuccess = this.getBaggageScanner().activate(this);
-                    if(activationSuccess){
-                        return true;
-                    }
+                    return this.getBaggageScanner().activate(this);
                 }
             }
         }
@@ -73,7 +68,6 @@ public class Inspector extends Employee {
     }
 
     public void scanRemainingBaggage(){
-        //TODO mach hier auch deinen shit
         for(int i = 0; i < getBaggageScanner().getBelt().getTrays().size(); i++){
             getBaggageScanner().getOperatingStation().pushRightButton();
             getBaggageScanner().getOperatingStation().pushRectagleButton();
@@ -110,6 +104,7 @@ public class Inspector extends Employee {
     public void inspect() {
         Tray tray = getBaggageScanner().getTracks()[0].getTrayList().peek();
         takeOutKnife(tray.getHandBaggage());
+        disposeKnife();
         getBaggageScanner().getOperatingStation().pushLeftButton();
         getBaggageScanner().getOperatingStation().pushRectagleButton();
     }

@@ -3,8 +3,8 @@ package federalPolice;
 import baggage.HandBaggage;
 
 public class Robocop {
-    private HighPressureWaterJet highPressureWaterJet;
-    private Remote remote;
+    private final HighPressureWaterJet highPressureWaterJet;
+    private final Remote remote;
     private boolean isAtAirport;
     public Robocop() {
         highPressureWaterJet = new HighPressureWaterJet();
@@ -12,9 +12,8 @@ public class Robocop {
     }
 
     public char[][] destroyHandBaggage(HandBaggage handbaggage){
-        int x = 0;
         int y = 0;
-        int z = 0;
+        int z;
         char[][] destroyedHandbaggage = new char[1000][50];
 
         for(int i=0; i<5; i++){
@@ -40,5 +39,9 @@ public class Robocop {
 
     public void setAtAirport(boolean atAirport) {
         isAtAirport = atAirport;
+    }
+
+    public HighPressureWaterJet getHighPressureWaterJet() {
+        return highPressureWaterJet;
     }
 }

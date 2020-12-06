@@ -1,6 +1,5 @@
 package employee.id;
 
-import baggage.Passenger;
 import employee.Employee;
 
 public class ProfileManager {

@@ -3,7 +3,7 @@ package baggageScanner;
 import java.util.Random;
 
 public class TestStripe {
-    private char[][] content;
+    private final char[][] content;
     public TestStripe() {
         content = new char[30][10];
         for (int i = 0; i < 30; i++){

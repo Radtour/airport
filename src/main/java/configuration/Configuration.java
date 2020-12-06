@@ -23,7 +23,5 @@ public enum Configuration {
     public final algorithms.BoyerMoore boyerMoore = new BoyerMoore();
     public final algorithms.KnuthMorrisPratt knuthMorrisPratt = new KnuthMorrisPratt();
     public final String secretKey = "dhbw$20^20_";
-    public final SimpleDateFormat dateFormatFull= new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
     public final SimpleDateFormat dateFormatShort= new SimpleDateFormat("dd.MM.yyyy");
-    public final DateFormat dateFormatMegaFull = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss,SSS");
 }

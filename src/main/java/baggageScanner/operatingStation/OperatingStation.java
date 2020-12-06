@@ -1,11 +1,9 @@
 package baggageScanner.operatingStation;
 
 import baggageScanner.BaggageScanner;
-import baggageScanner.buttons.Button;
 import baggageScanner.buttons.LeftButton;
 import baggageScanner.buttons.RectangleButton;
 import baggageScanner.buttons.RightButton;
-import baggageScanner.conveyingComponents.Tray;
 import employee.Inspector;
 
 public class OperatingStation {
@@ -13,7 +11,7 @@ public class OperatingStation {
     private final RightButton rightButton;
     private final RectangleButton rectangleButton;
     private final Inspector inspector;
-    private Scanner scanner;
+    private final Scanner scanner;
     private final BaggageScanner baggageScanner;
 
     public OperatingStation(Inspector inspector, BaggageScanner baggageScanner){
@@ -38,17 +36,7 @@ public class OperatingStation {
         rightButton.push(inspector);
     }
 
-    public LeftButton getLeftButton() {
-        return leftButton;
-    }
 
-    public RightButton getRightButton() {
-        return rightButton;
-    }
-
-    public RectangleButton getRectangleButton() {
-        return rectangleButton;
-    }
 
     public Inspector getInspector() {
         return inspector;

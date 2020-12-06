@@ -5,12 +5,10 @@ import baggage.HandBaggage;
 import baggageScanner.BaggageScanner;
 
 import java.util.Random;
-import java.util.SimpleTimeZone;
 
 public class FederalPoliceOffice {
-    private Robocop[] robocop;
-    private FederalPoliceOfficer[] officers;
-    private HandBaggage[] perceivedHandBaggage;
+    private final Robocop[] robocop;
+    private final FederalPoliceOfficer[] officers;
     public FederalPoliceOffice(FederalPoliceOfficer officer01, FederalPoliceOfficer officer02, FederalPoliceOfficer officer03){
         robocop = new Robocop[3];
         for(int i = 0; i < 3; i++){
@@ -23,7 +21,6 @@ public class FederalPoliceOffice {
         officer03.setOffice(this);
         officers[2] = officer01;
         officer01.setOffice(this);
-        this.perceivedHandBaggage = new HandBaggage[3];
     }
 
     public boolean sendRandomRobocop(){
@@ -48,9 +45,7 @@ public class FederalPoliceOffice {
             return true;
         }
         if(baggageScanner.getRecords().get(baggageScanner.getRecords().size()-1).getResult().contains("explosive")){
-            if(startExplosiveRemoval(baggageScanner)){
-                return true;
-            }
+            return startExplosiveRemoval(baggageScanner);
         }
         return false;
     }
@@ -71,11 +66,4 @@ public class FederalPoliceOffice {
         return false;
     }
 
-    public void setPerceivedHandBaggage(HandBaggage[] perceivedHandBaggage) {
-        this.perceivedHandBaggage = perceivedHandBaggage;
-    }
-
-    public HandBaggage[] getPerceivedHandBaggage() {
-        return perceivedHandBaggage;
-    }
 }

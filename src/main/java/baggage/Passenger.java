@@ -1,13 +1,12 @@
 package baggage;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Passenger {
 
     private final String name;
-    private HandBaggage[] handBaggages;
+    private final HandBaggage[] handBaggages;
     private boolean isArrested;
     private boolean isInPersonControl;
 
@@ -23,8 +22,8 @@ public class Passenger {
 
             var baggageInfo = baggageInfoString.split(";");
 
-            for (int i = 0; i < baggageInfo.length; i++){
-                baggageInfoList.add(baggageInfo[i].split(","));
+            for (String s : baggageInfo) {
+                baggageInfoList.add(s.split(","));
             }
         }
 
@@ -43,25 +42,20 @@ public class Passenger {
                 }
             }
 
+            HandBaggage handBaggageTemp;
             if(hasIllegalItem){
-                HandBaggage handBaggageTemp = new HandBaggage(information);
-                this.handBaggages[i] = handBaggageTemp;
-                HandBaggage.addHandBaggageToHashSet(handBaggageTemp);
+                handBaggageTemp = new HandBaggage(information);
             }
             else {
-                HandBaggage handBaggageTemp = new HandBaggage();
-                this.handBaggages[i] = handBaggageTemp;
-                HandBaggage.addHandBaggageToHashSet(handBaggageTemp);
+                handBaggageTemp = new HandBaggage();
             }
+            this.handBaggages[i] = handBaggageTemp;
+            HandBaggage.addHandBaggageToHashSet(handBaggageTemp);
         }
     }
 
     public HandBaggage[] getHandBaggages() {
         return handBaggages;
-    }
-
-    public void setHandBaggages(HandBaggage[] handBaggages) {
-        this.handBaggages = handBaggages;
     }
 
     public String getName() {

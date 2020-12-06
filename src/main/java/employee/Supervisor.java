@@ -1,6 +1,5 @@
 package employee;
 
-import baggageScanner.BaggageScannerStatus;
 import baggageScanner.Supervision;
 import employee.id.IDCard;
 import employee.id.ProfileType;

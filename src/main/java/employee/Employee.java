@@ -5,7 +5,6 @@ import employee.id.IDCard;
 import employee.id.ProfileType;
 
 import java.util.Date;
-import java.util.Random;
 import java.util.UUID;
 
 public abstract class Employee {

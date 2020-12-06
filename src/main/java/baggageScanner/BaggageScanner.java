@@ -12,28 +12,25 @@ import configuration.AlgorithmType;
 import configuration.Configuration;
 import employee.*;
 import employee.id.ProfileManager;
-import federalPolice.FederalPoliceOffice;
 import federalPolice.FederalPoliceOfficer;
 
-import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class BaggageScanner {
     private BaggageScannerStatus status;
-    private FederalPoliceOfficer officer;
-    private Supervision supervision;
-    private Belt belt;
-    private RollerConveyor rollerConveyor;
-    private OperatingStation operatingStation;
-    private ManualPostControl manualPostControl;
-    private Track[] tracks;
-    private List<Record> record;
-    private Technician technician;
-    private HouseKeeper houseKeeper;
+    private final FederalPoliceOfficer officer;
+    private final Supervision supervision;
+    private final Belt belt;
+    private final RollerConveyor rollerConveyor;
+    private final OperatingStation operatingStation;
+    private final ManualPostControl manualPostControl;
+    private final Track[] tracks;
+    private final List<Record> record;
+    private final Technician technician;
+    private final HouseKeeper houseKeeper;
     private Tray currentTrayInScanner;
 
     public BaggageScanner(Supervisor supervisorS0, Inspector inspectorI1, Inspector inspectorI2, Inspector inspectorI3, Technician technician, FederalPoliceOfficer federalPoliceOfficerO1, HouseKeeper houseKeeper){
@@ -196,12 +193,7 @@ public class BaggageScanner {
     }
 
     public boolean moveBeltBackwards(Employee employee) {
-        if(ProfileManager.isAllowedToUseMoveBeltBackward(employee) && ProfileManager.isAllowedToUseBaggageScanner(employee)){
-
-
-            return true;
-        }
-        return false;
+        return ProfileManager.isAllowedToUseMoveBeltBackward(employee) && ProfileManager.isAllowedToUseBaggageScanner(employee);
     }
 
     public boolean alarm(Employee employee) {
@@ -213,21 +205,11 @@ public class BaggageScanner {
         return false;
     }
     public boolean report(Employee employee) {
-        if (ProfileManager.isAllowedToUseReport(employee) && ProfileManager.isAllowedToUseBaggageScanner(employee)) {
-
-
-            return true;
-        }
-        return false;
+        return ProfileManager.isAllowedToUseReport(employee) && ProfileManager.isAllowedToUseBaggageScanner(employee);
     }
 
     public boolean maintenance(Employee employee) {
-        if(ProfileManager.isAllowedToUseMaintenance(employee) && ProfileManager.isAllowedToUseBaggageScanner(employee)){
-
-
-            return true;
-        }
-        return false;
+        return ProfileManager.isAllowedToUseMaintenance(employee) && ProfileManager.isAllowedToUseBaggageScanner(employee);
     }
 
     public boolean unlock(Employee employee){

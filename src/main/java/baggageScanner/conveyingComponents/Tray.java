@@ -2,7 +2,6 @@ package baggageScanner.conveyingComponents;
 
 import baggage.HandBaggage;
 
-import java.util.Queue;
 
 public class Tray {
 
@@ -14,10 +13,6 @@ public class Tray {
 
     public void setHandBaggage(HandBaggage handBaggage) {
         this.handBaggage = handBaggage;
-    }
-
-    public void removeHandBaggage(){
-        this.handBaggage = null;
     }
 
     public HandBaggage getHandBaggage() {

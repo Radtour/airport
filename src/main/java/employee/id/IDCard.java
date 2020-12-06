@@ -1,6 +1,5 @@
 package employee.id;
 
-import configuration.Configuration;
 import employee.Employee;
 
 import java.util.Calendar;

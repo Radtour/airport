@@ -1,7 +1,5 @@
 package baggageScanner.buttons;
 
-import baggageScanner.BaggageScanner;
-import baggageScanner.conveyingComponents.Tray;
 import employee.Employee;
 
 public class LeftButton extends Button{

@@ -1,13 +1,13 @@
 package baggageScanner;
 
-import baggage.HandBaggage;
+
 import baggage.Passenger;
 import employee.Inspector;
 
 public class ManualPostControl {
     private final BaggageScanner baggageScanner;
     private Passenger currentPassenger;
-    private Inspector inspector;
+    private final Inspector inspector;
 
     public ManualPostControl(Inspector inspector, BaggageScanner baggageScanner) {
         this.inspector = inspector;

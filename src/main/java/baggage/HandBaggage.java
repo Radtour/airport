@@ -24,7 +24,7 @@ public class HandBaggage {
             case "K" -> {
                 int layerLength = layers[Integer.parseInt(baggageInfo[1]) - 1].getContent().length;
                 int illegalItemLength = Configuration.instance.knife.length();
-                int r = random.nextInt((layerLength - illegalItemLength));
+                int r = random.nextInt(layerLength)- illegalItemLength;
                 if(r < 0){
                     r = 0;
                 }
@@ -42,7 +42,7 @@ public class HandBaggage {
             case "W" -> {
                 int layerLength = layers[Integer.parseInt(baggageInfo[1]) - 1].getContent().length;
                 int illegalItemLength = Configuration.instance.weapon.length();
-                int r = random.nextInt((layerLength - illegalItemLength));
+                int r = random.nextInt(layerLength)- illegalItemLength;
                 if(r < 0){
                     r = 0;
                 }
@@ -60,7 +60,7 @@ public class HandBaggage {
             case "E" -> {
                 int layerLength = layers[Integer.parseInt(baggageInfo[1]) - 1].getContent().length;
                 int illegalItemLength = Configuration.instance.explosive.length();
-                int r = random.nextInt((layerLength - illegalItemLength));
+                int r = random.nextInt(layerLength)- illegalItemLength;
                 if(r < 0){
                     r = 0;
                 }

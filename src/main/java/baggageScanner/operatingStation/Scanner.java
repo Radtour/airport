@@ -5,7 +5,7 @@ import employee.id.IDCard;
 import employee.id.ProfileManager;
 
 public class Scanner {
-    private OperatingStation operatingStation;
+    private final OperatingStation operatingStation;
     private IDCard currentIDCard;
 
     public Scanner(OperatingStation operatingStation){
@@ -14,10 +14,6 @@ public class Scanner {
 
     public OperatingStation getOperatingStation() {
         return operatingStation;
-    }
-
-    public void setOperatingStation(OperatingStation operatingStation) {
-        this.operatingStation = operatingStation;
     }
 
     public boolean swipeCard(IDCard idCard) {

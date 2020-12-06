@@ -9,7 +9,7 @@ import java.util.Queue;
 public class RollerConveyor {
     private final BaggageScanner baggageScanner;
     private final Inspector inspector;
-    private Queue<Tray> trays;
+    private final Queue<Tray> trays;
 
     public RollerConveyor(Inspector inspector, BaggageScanner baggageScanner){
         this.inspector = inspector;

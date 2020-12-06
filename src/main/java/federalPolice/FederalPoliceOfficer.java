@@ -5,6 +5,7 @@ import baggage.Passenger;
 import baggageScanner.BaggageScanner;
 import employee.Employee;
 import employee.id.IDCard;
+import employee.id.ProfileManager;
 import employee.id.ProfileType;
 
 import java.util.Date;
@@ -31,7 +32,7 @@ public class FederalPoliceOfficer extends Employee {
 
     public void openBaggage(HandBaggage handBaggage){
         takeoutWeapon(handBaggage);
-        showWeapon();
+        giveWeaponToPoliceOfficer();
     }
 
     public void takeoutWeapon(HandBaggage handBaggage){
@@ -40,10 +41,6 @@ public class FederalPoliceOfficer extends Employee {
         char layerChar = result.charAt(result.length()-1);
         int layer = Integer.parseInt(String.valueOf(layerChar));
         handBaggage.getLayers()[layer].clearLayer();
-    }
-
-    public void showWeapon(){
-        giveWeaponToPoliceOfficer();
     }
 
     public void giveWeaponToPoliceOfficer(){

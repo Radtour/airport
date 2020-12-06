@@ -8,7 +8,7 @@ import java.util.Queue;
 public class Belt {
     private final BaggageScanner baggageScanner;
 
-    private Queue<Tray> trays;
+    private final Queue<Tray> trays;
 
     public Belt(BaggageScanner baggageScanner){
         this.baggageScanner = baggageScanner;
@@ -23,4 +23,7 @@ public class Belt {
         this.trays.add(tray);
     }
 
+    public BaggageScanner getBaggageScanner() {
+        return baggageScanner;
+    }
 }
